@@ -1,0 +1,541 @@
+/* ==========================================================================
+   The Coffee Circle — UI Components
+   Buttons, Badges, Product Grid & Cards, Options, Modals & Form Controls
+   ========================================================================== */
+
+/* Buttons & Button Rows
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.93rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
+  color: var(--color-cream-light);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-espresso-dark);
+  border-color: var(--color-espresso-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-espresso-dark);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-gold-dark);
+  border-color: var(--color-gold-dark);
+  color: var(--color-surface);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--color-espresso);
+  color: var(--color-espresso);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--color-espresso);
+  color: var(--color-cream-light);
+}
+
+.btn-ghost {
+  background-color: var(--color-cream);
+  border-color: var(--color-border);
+  color: var(--color-espresso);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: #EFE1CF;
+  border-color: var(--color-gold);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 0.92rem 1.85rem;
+  font-size: 1rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.75rem;
+}
+
+/* Badges
+   ========================================================================== */
+
+.cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding-inline: 0.35rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-gold);
+  color: var(--color-espresso-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nav-link-cart.active .cart-badge {
+  background-color: var(--color-gold-light);
+  color: var(--color-espresso-dark);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  border: 1px solid var(--color-border);
+}
+
+.badge-gold {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-espresso-dark);
+}
+
+/* Product Grid & Cards
+   ========================================================================== */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+.product-grid:empty {
+  min-height: 120px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-fast);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-gold);
+}
+
+.product-card-media,
+.product-image-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-cream) 0%, #EADAC7 100%);
+}
+
+.product-card-media img,
+.product-image-wrap img,
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-card:hover .product-card-media img,
+.product-card:hover .product-image-wrap img,
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background-color: rgba(36, 20, 13, 0.88);
+  color: var(--color-gold-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.product-card-body,
+.product-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1.35rem;
+  gap: 0.85rem;
+}
+
+.product-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.product-title,
+.product-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-espresso-dark);
+  line-height: 1.25;
+}
+
+.product-price {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-gold-dark);
+  white-space: nowrap;
+}
+
+.product-description,
+.product-desc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+/* Product Customization Options (Sizes & Extras)
+   ========================================================================== */
+
+.product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed var(--color-border);
+}
+
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.option-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.size-options,
+.size-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.size-btn {
+  flex: 1 1 auto;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-warm);
+  color: var(--color-espresso);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.size-btn:hover {
+  border-color: var(--color-gold);
+  background-color: var(--color-cream);
+}
+
+.size-btn.active,
+.size-btn.is-selected,
+.size-btn[aria-pressed="true"] {
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
+  color: var(--color-cream-light);
+}
+
+.extras-options,
+.extras-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.extra-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-warm);
+  border: 1px solid transparent;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.extra-option:hover {
+  background-color: var(--color-cream);
+  border-color: var(--color-border);
+}
+
+.extra-option input[type="checkbox"] {
+  accent-color: var(--color-espresso);
+  width: 15px;
+  height: 15px;
+  margin: 0;
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.product-actions .btn-primary {
+  flex: 1 1 auto;
+}
+
+/* Modals (Quick View & Dialogs)
+   ========================================================================== */
+
+.modal,
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background-color: rgba(36, 20, 13, 0.66);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.modal.is-open,
+.modal.open,
+.modal.active,
+.modal[aria-hidden="false"],
+.modal-overlay.is-open,
+.modal-overlay.open,
+.modal-overlay.active,
+.modal-overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-dialog,
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(14px) scale(0.98);
+  transition: transform var(--transition-base);
+}
+
+.modal.is-open .modal-dialog,
+.modal.is-open .modal-content,
+.modal.open .modal-dialog,
+.modal.open .modal-content,
+.modal.active .modal-dialog,
+.modal.active .modal-content,
+.modal[aria-hidden="false"] .modal-dialog,
+.modal[aria-hidden="false"] .modal-content,
+.modal-overlay.is-open .modal-dialog,
+.modal-overlay.is-open .modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--color-surface-warm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-espresso-dark);
+}
+
+.modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-surface);
+  color: var(--color-espresso);
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.modal-close:hover {
+  background-color: var(--color-espresso);
+  border-color: var(--color-espresso);
+  color: var(--color-cream-light);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.1rem 1.5rem;
+  background-color: var(--color-surface-warm);
+  border-top: 1px solid var(--color-border);
+}
+
+.ingredient-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.ingredient-list li {
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-cream);
+  border: 1px solid var(--color-border);
+  font-size: 0.84rem;
+  color: var(--color-espresso);
+}
+
+/* Generic Card & Feedback Utilities
+   ========================================================================== */
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.toast {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1100;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-espresso-dark);
+  color: var(--color-cream-light);
+  border-left: 4px solid var(--color-gold);
+  box-shadow: var(--shadow-md);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(198, 139, 89, 0.22);
+}
