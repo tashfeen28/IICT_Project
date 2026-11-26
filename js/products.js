@@ -361,27 +361,32 @@
   function buildCoffeeEmblemSvg(variant) {
     if (variant === "latte-heart") {
       return `
-        <svg viewBox="0 0 96 96" width="84" height="84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <ellipse cx="48" cy="74" rx="30" ry="6" fill="#F2EAE0"/>
-          <ellipse cx="48" cy="72" rx="28" ry="5" fill="#FFFFFF"/>
-          <path d="M22 36H70V51C70 63.703 59.703 72 46 72C32.297 72 22 63.703 22 51V36Z" fill="#FFFFFF"/>
-          <path d="M70 40H75.5C79.642 40 83 43.358 83 47.5C83 51.642 79.642 55 75.5 55H69.5" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-          <ellipse cx="46" cy="36" rx="24" ry="7.5" fill="#C68B59"/>
-          <ellipse cx="46" cy="36" rx="20" ry="5.5" fill="#F5EBDD"/>
-          <path d="M46 40.2C46 40.2 38.5 36.8 38.5 33.4C38.5 31.7 39.9 30.5 41.6 30.5C43.2 30.5 44.7 31.4 46 32.8C47.3 31.4 48.8 30.5 50.4 30.5C52.1 30.5 53.5 31.7 53.5 33.4C53.5 36.8 46 40.2 46 40.2Z" fill="#8C5327"/>
+        <svg viewBox="0 0 96 96" width="136" height="136" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="47" cy="79" rx="37" ry="7" fill="#D5BC9E" fill-opacity="0.7"/>
+          <ellipse cx="47" cy="76.5" rx="35" ry="6" fill="#FFFFFF"/>
+          <ellipse cx="47" cy="75.5" rx="28" ry="3.5" fill="#F2E7D8"/>
+          <path d="M16 32H74V51C74 66.464 61.464 76.5 45 76.5C28.536 76.5 16 66.464 16 51V32Z" fill="#FFFFFF"/>
+          <path d="M19 56C22 67 32.5 74 45 74C57.5 74 68 67 71 56C66.5 64 56.5 69.5 45 69.5C33.5 69.5 23.5 64 19 56Z" fill="#F3E8D9"/>
+          <path d="M73 37H79.5C84.747 37 89 41.253 89 46.5C89 51.747 84.747 56 79.5 56H72.5" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="45" cy="32" rx="29" ry="9" fill="#B87A48"/>
+          <ellipse cx="45" cy="32" rx="24.5" ry="6.8" fill="#F7EDE0"/>
+          <path d="M45 37.2C45 37.2 35.5 32.8 35.5 28.4C35.5 26.2 37.3 24.7 39.5 24.7C41.6 24.7 43.5 25.9 45 27.6C46.5 25.9 48.4 24.7 50.5 24.7C52.7 24.7 54.5 26.2 54.5 28.4C54.5 32.8 45 37.2 45 37.2Z" fill="#7A421D"/>
+          <path d="M35 19.5C33 16.5 33 13 35 10M45 18C43 15 43 11.5 45 8.5M55 19.5C53 16.5 53 13 55 10" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-opacity="0.88"/>
         </svg>
       `;
     }
 
     return `
-      <svg viewBox="0 0 96 96" width="84" height="84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <ellipse cx="48" cy="74" rx="28" ry="5.5" fill="#F2EAE0"/>
-        <ellipse cx="48" cy="72" rx="26" ry="4.5" fill="#FFFFFF"/>
-        <path d="M26 37H66V52C66 63.046 57.046 71 46 71C34.954 71 26 63.046 26 52V37Z" fill="#FFFFFF"/>
-        <path d="M66 41H71C74.866 41 78 44.134 78 48C78 51.866 74.866 55 71 55H65.5" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-        <ellipse cx="46" cy="37" rx="20" ry="6" fill="#6E3F22"/>
-        <ellipse cx="46" cy="36.5" rx="16.5" ry="4.2" fill="#C68B59"/>
-        <path d="M38 25C36 22 36 18.5 38 15.5M46 24C44 21 44 17.5 46 14.5M54 25C52 22 52 18.5 54 15.5" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.9"/>
+      <svg viewBox="0 0 96 96" width="136" height="136" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="47" cy="80" rx="35" ry="6.5" fill="#D5BC9E" fill-opacity="0.7"/>
+        <ellipse cx="47" cy="77.5" rx="33" ry="5.5" fill="#FFFFFF"/>
+        <ellipse cx="47" cy="76.5" rx="26" ry="3.2" fill="#F2E7D8"/>
+        <path d="M18 35H72V53C72 67.359 60.359 77 45 77C29.641 77 18 67.359 18 53V35Z" fill="#FFFFFF"/>
+        <path d="M21 57C24 67.5 33.5 74.5 45 74.5C56.5 74.5 66 67.5 69 57C64.5 64.5 55.5 70 45 70C34.5 70 25.5 64.5 21 57Z" fill="#F3E8D9"/>
+        <path d="M71 40H77.5C82.47 40 86.5 44.03 86.5 49C86.5 53.97 82.47 58 77.5 58H70.5" stroke="#FFFFFF" stroke-width="5.8" stroke-linecap="round"/>
+        <ellipse cx="45" cy="35" rx="27" ry="8" fill="#5D3219"/>
+        <ellipse cx="45" cy="34.5" rx="22" ry="5.6" fill="#C68B59"/>
+        <path d="M34 22C31.5 18 31.5 13.5 34 9.5M45 20.5C42.5 16.5 42.5 12 45 8M56 22C53.5 18 53.5 13.5 56 9.5" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-opacity="0.95"/>
       </svg>
     `;
   }
@@ -414,14 +419,15 @@
 
     const artVariant = product.artVariant || ((index + 1) % 4 === 0 ? "latte-heart" : "classic");
     const extrasPanelId = `${product.id}-extras-panel`;
+    const hasPhoto = Boolean(product.hasPhoto && product.image);
+    const mediaClass = hasPhoto ? "product-card-media" : "product-card-media is-fallback";
+    const imgHtml = hasPhoto
+      ? `<img src="${root}${product.image}" alt="${escapeHtml(product.name)}" loading="lazy">`
+      : "";
 
     card.innerHTML = `
-      <div class="product-card-media">
-        <img
-          src="${root}${product.image}"
-          alt="${escapeHtml(product.name)}"
-          loading="lazy"
-        >
+      <div class="${mediaClass}">
+        ${imgHtml}
         <div class="product-card-fallback" aria-hidden="true">
           <div class="product-card-fallback-circle">
             ${buildCoffeeEmblemSvg(artVariant)}
@@ -484,10 +490,12 @@
 
     const mediaBox = card.querySelector(".product-card-media");
     const productImg = mediaBox.querySelector("img");
-    productImg.addEventListener("error", () => {
-      mediaBox.classList.add("is-fallback");
-      productImg.hidden = true;
-    });
+    if (productImg) {
+      productImg.addEventListener("error", () => {
+        mediaBox.classList.add("is-fallback");
+        productImg.hidden = true;
+      });
+    }
 
     const sizeSelect = card.querySelector("[data-size-select]");
     sizeSelect.addEventListener("change", () => {
@@ -534,6 +542,248 @@
     });
 
     return card;
+  }
+
+  function renderEspressoHeader(headerHost, root) {
+    headerHost.innerHTML = `
+      <header class="site-header sticky-top" data-espresso-header="true">
+        <nav class="navbar navbar-expand-lg navbar-dark coffee-navbar" aria-label="Primary navigation">
+          <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="${root}index.html">
+              <img
+                src="${root}images/logo.svg"
+                alt="The Coffee Circle logo"
+                width="38"
+                height="38"
+                class="brand-logo"
+              >
+              <span class="brand-text">The Coffee Circle</span>
+            </a>
+
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#primaryNavbar"
+              aria-controls="primaryNavbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="primaryNavbar">
+              <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item">
+                  <a class="nav-link" href="${root}index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${root}pages/about.html">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle nav-menu-pill active"
+                    href="${root}pages/menu.html"
+                    id="navbarMenuDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Menu
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end coffee-dropdown-menu" aria-labelledby="navbarMenuDropdown">
+                    <li><a class="dropdown-item" href="${root}pages/menu.html">All Coffee</a></li>
+                    <li><a class="dropdown-item" href="${root}pages/cappuccino.html">Cappuccino</a></li>
+                    <li><a class="dropdown-item active" href="${root}pages/espresso.html" aria-current="page">Espresso</a></li>
+                    <li><a class="dropdown-item" href="${root}pages/latte.html">Latte</a></li>
+                    <li><a class="dropdown-item" href="${root}pages/cold-coffee.html">Cold Coffee</a></li>
+                    <li><a class="dropdown-item" href="${root}pages/signature.html">Signature Drinks</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${root}pages/loyalty.html">Loyalty Rewards</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${root}pages/account.html">My Account</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${root}pages/login.html">Login / Register</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link nav-cart-link"
+                    href="${root}pages/cart.html"
+                    aria-label="Shopping bag"
+                    title="View cart"
+                  >
+                    <svg
+                      class="nav-bag-icon"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      height="20"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 7h12l1 13H5L6 7z"/>
+                      <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+                    </svg>
+                    <span class="cart-badge nav-cart-badge" id="nav-cart-count">0</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    `;
+  }
+
+  let hasBoundGlobalHeaderListeners = false;
+
+  function bindEspressoHeaderEvents(headerHost) {
+    const navbar = headerHost.querySelector(".coffee-navbar");
+    const toggler = headerHost.querySelector(".navbar-toggler");
+    const navCollapse = headerHost.querySelector("#primaryNavbar");
+    const dropdownToggle = headerHost.querySelector("#navbarMenuDropdown");
+    const dropdownMenu = headerHost.querySelector(".coffee-dropdown-menu");
+
+    const updateNavbarScrollState = () => {
+      const activeNavbar = document.querySelector("[data-espresso-header='true'] .coffee-navbar");
+      if (activeNavbar) {
+        activeNavbar.classList.toggle("is-scrolled", window.scrollY > 16);
+      }
+    };
+
+    const closeDropdownFallback = () => {
+      if (dropdownToggle && dropdownMenu) {
+        dropdownMenu.classList.remove("show");
+        dropdownToggle.classList.remove("show");
+        dropdownToggle.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    const closeMobileMenu = () => {
+      if (!navCollapse || !navCollapse.classList.contains("show")) {
+        return;
+      }
+      if (window.bootstrap && window.bootstrap.Collapse) {
+        window.bootstrap.Collapse.getOrCreateInstance(navCollapse).hide();
+      } else {
+        navCollapse.classList.remove("show");
+        if (toggler) {
+          toggler.setAttribute("aria-expanded", "false");
+        }
+      }
+    };
+
+    if (toggler && navCollapse && !(window.bootstrap && window.bootstrap.Collapse)) {
+      toggler.addEventListener("click", () => {
+        const isOpen = navCollapse.classList.toggle("show");
+        toggler.setAttribute("aria-expanded", String(isOpen));
+      });
+    }
+
+    if (dropdownToggle && dropdownMenu && !(window.bootstrap && window.bootstrap.Dropdown)) {
+      dropdownToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        const isOpen = dropdownMenu.classList.toggle("show");
+        dropdownToggle.classList.toggle("show", isOpen);
+        dropdownToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+    }
+
+    headerHost.querySelectorAll(".nav-link:not(.dropdown-toggle), .dropdown-item").forEach((link) => {
+      link.addEventListener("click", () => {
+        closeDropdownFallback();
+        closeMobileMenu();
+      });
+    });
+
+    if (!hasBoundGlobalHeaderListeners) {
+      hasBoundGlobalHeaderListeners = true;
+      window.addEventListener("scroll", updateNavbarScrollState, { passive: true });
+      document.addEventListener("click", (event) => {
+        const activeToggle = document.querySelector("[data-espresso-header='true'] #navbarMenuDropdown");
+        const activeMenu = document.querySelector("[data-espresso-header='true'] .coffee-dropdown-menu");
+        if (
+          activeToggle &&
+          activeMenu &&
+          !(window.bootstrap && window.bootstrap.Dropdown) &&
+          !event.target.closest("[data-espresso-header='true'] .dropdown")
+        ) {
+          activeMenu.classList.remove("show");
+          activeToggle.classList.remove("show");
+          activeToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") {
+          return;
+        }
+        const activeCollapse = document.querySelector("[data-espresso-header='true'] #primaryNavbar");
+        const activeToggler = document.querySelector("[data-espresso-header='true'] .navbar-toggler");
+        if (activeCollapse && activeCollapse.classList.contains("show")) {
+          if (window.bootstrap && window.bootstrap.Collapse) {
+            window.bootstrap.Collapse.getOrCreateInstance(activeCollapse).hide();
+          } else {
+            activeCollapse.classList.remove("show");
+            if (activeToggler) {
+              activeToggler.setAttribute("aria-expanded", "false");
+            }
+          }
+        }
+      });
+    }
+
+    if (navbar) {
+      updateNavbarScrollState();
+    }
+    if (window.CoffeeCart && typeof window.CoffeeCart.updateBadge === "function") {
+      window.CoffeeCart.updateBadge();
+    }
+  }
+
+  function keepEspressoSectionRendered(hostId, markerSelector, renderFn) {
+    const host = document.getElementById(hostId);
+    if (!host) {
+      return;
+    }
+
+    let isUpdating = false;
+    const apply = () => {
+      if (isUpdating || host.querySelector(markerSelector)) {
+        return;
+      }
+      isUpdating = true;
+      renderFn(host);
+      isUpdating = false;
+    };
+
+    const observer = new MutationObserver(() => {
+      if (!host.querySelector(markerSelector)) {
+        apply();
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(host, { childList: true });
+    apply();
+
+    window.addEventListener("load", () => {
+      apply();
+      observer.disconnect();
+    }, { once: true });
+  }
+
+  function initEspressoHeader(root) {
+    keepEspressoSectionRendered("site-header", "[data-espresso-header='true']", (headerHost) => {
+      renderEspressoHeader(headerHost, root);
+      bindEspressoHeaderEvents(headerHost);
+    });
   }
 
   function renderEspressoFooter(footerHost, root) {
@@ -598,35 +848,9 @@
   }
 
   function initEspressoFooter(root) {
-    const footerHost = document.getElementById("site-footer");
-    if (!footerHost) {
-      return;
-    }
-
-    let isUpdating = false;
-    const applyFooter = () => {
-      if (isUpdating || footerHost.querySelector(".footer-grid")) {
-        return;
-      }
-      isUpdating = true;
+    keepEspressoSectionRendered("site-footer", ".footer-grid", (footerHost) => {
       renderEspressoFooter(footerHost, root);
-      isUpdating = false;
-    };
-
-    const observer = new MutationObserver(() => {
-      if (!footerHost.querySelector(".footer-grid")) {
-        applyFooter();
-        observer.disconnect();
-      }
     });
-
-    observer.observe(footerHost, { childList: true });
-    applyFooter();
-
-    window.addEventListener("load", () => {
-      applyFooter();
-      observer.disconnect();
-    }, { once: true });
   }
 
   function initEspressoProducts() {
@@ -637,6 +861,7 @@
     }
 
     const root = getRootPath();
+    initEspressoHeader(root);
     initEspressoFooter(root);
     const liveRegion = document.createElement("p");
     liveRegion.className = "visually-hidden";

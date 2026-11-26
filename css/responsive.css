@@ -1,15 +1,26 @@
 /* Responsive layout, product grid, and navbar adjustments for The Coffee Circle */
 
 @media (min-width: 992px) {
-  .coffee-navbar .nav-link.active::after {
+  .coffee-navbar .nav-link.active:not(.nav-menu-pill):not(.nav-cart-link)::after {
     content: "";
     position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
+    left: 0.72rem;
+    right: 0.72rem;
     bottom: 0.15rem;
     height: 2px;
     background-color: var(--coffee-accent);
     border-radius: 2px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .coffee-navbar .nav-link {
+    font-size: 0.83rem;
+    padding: 0.42rem 0.52rem;
+  }
+
+  .coffee-navbar .nav-link.nav-menu-pill {
+    padding: 0.36rem 0.78rem;
   }
 }
 
@@ -32,6 +43,25 @@
 
   .coffee-navbar .nav-link.active {
     color: var(--coffee-accent);
+  }
+
+  .coffee-navbar .nav-link.nav-menu-pill {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.42rem 0.95rem;
+    margin: 0.2rem 0;
+    color: var(--coffee-cream);
+  }
+
+  .coffee-dropdown-menu {
+    background-color: rgba(38, 22, 14, 0.72);
+    border-color: rgba(198, 139, 89, 0.25);
+    margin-bottom: 0.35rem;
+  }
+
+  .coffee-navbar .nav-link.nav-cart-link {
+    margin-left: 0;
+    margin-top: 0.4rem;
   }
 
   .product-grid {
