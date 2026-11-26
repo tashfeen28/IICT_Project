@@ -2,22 +2,23 @@
 
 :root {
   --coffee-dark: #3B2418;
-  --coffee-espresso: #2E1A0F;
-  --coffee-roast: #26160E;
+  --coffee-espresso: #462B1D;
+  --coffee-roast: #2E1B11;
   --coffee-accent: #C68B59;
   --coffee-accent-hover: #B07645;
   --coffee-accent-text: #7A4620;
-  --coffee-accent-soft: #E2AB79;
+  --coffee-accent-soft: #E5B486;
   --coffee-parchment: #EFE5D6;
   --coffee-sand: #EDE2D2;
-  --coffee-tan: #E8D8C3;
-  --coffee-tan-deep: #DECAB1;
+  --coffee-card: #F6EFE4;
+  --coffee-tan: #EDE2D2;
+  --coffee-tan-deep: #E4D7C5;
   --coffee-cream: #F5EBDD;
   --coffee-light: #FAF6F0;
   --coffee-surface: #FFFFFF;
   --coffee-text: #2C1E16;
   --coffee-muted: #5C473B;
-  --coffee-border: rgba(59, 36, 24, 0.16);
+  --coffee-border: rgba(59, 36, 24, 0.14);
   --font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-body: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --radius-sm: 0.5rem;
@@ -83,8 +84,8 @@ h6 {
 .page-hero {
   padding: 4.75rem 0 4.25rem;
   text-align: center;
-  background: linear-gradient(160deg, var(--coffee-espresso) 0%, var(--coffee-dark) 74%, #462B1D 100%);
-  border-bottom: 2px solid rgba(198, 139, 89, 0.4);
+  background: linear-gradient(160deg, var(--coffee-dark) 0%, #42291C 52%, var(--coffee-espresso) 100%);
+  border-bottom: 2px solid rgba(198, 139, 89, 0.36);
   color: var(--coffee-cream);
 }
 
