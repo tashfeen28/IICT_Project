@@ -371,3 +371,154 @@ img, svg {
   text-align: center;
   font-size: 0.9rem;
 }
+
+/* Dark Loyalty Promo */
+.section-dark {
+  background: radial-gradient(circle at 20% 30%, #4e3020 0%, var(--espresso) 70%);
+  color: var(--cream);
+}
+
+.section-dark h2,
+.section-dark h3 {
+  color: var(--cream);
+}
+
+.section-dark p {
+  color: var(--beige);
+}
+
+.promo-steps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.promo-step {
+  background-color: rgba(245, 235, 221, 0.08);
+  border: 1px solid rgba(198, 139, 89, 0.35);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.promo-pts {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--caramel);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35rem;
+}
+
+.promo-step h3 {
+  font-size: 1.08rem;
+}
+
+/* Newsletter */
+.newsletter-box {
+  text-align: center;
+  max-width: 620px;
+}
+
+.newsletter-box h2 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin-bottom: 0.6rem;
+}
+
+.newsletter-box > p {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 36, 24, 0.2);
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: var(--text);
+}
+
+.newsletter-form input:focus {
+  outline: 2px solid var(--caramel);
+  border-color: transparent;
+}
+
+.form-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  min-height: 1.3em;
+}
+
+.form-message.success {
+  color: #2f6f3e;
+}
+
+.form-message.error {
+  color: #a93226;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* 4-Column Footer */
+.site-footer {
+  text-align: left;
+  padding: 3.5rem 0 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 2rem;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid rgba(232, 216, 195, 0.14);
+}
+
+.site-footer h3,
+.site-footer h4 {
+  color: var(--cream);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer p,
+.site-footer li {
+  color: var(--beige);
+  font-size: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+
+.site-footer a:hover {
+  color: var(--caramel);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.footer-bottom {
+  padding-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: rgba(232, 216, 195, 0.75);
+}

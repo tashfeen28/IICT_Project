@@ -128,3 +128,119 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Product Card Details */
+.btn-sm {
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+}
+
+.product-thumb {
+  background-color: var(--cream);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: grid;
+  place-items: center;
+}
+
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.product-cat {
+  color: var(--caramel);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-price {
+  font-weight: 700;
+  color: var(--espresso);
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  flex: 1;
+}
+
+.product-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.product-actions .btn {
+  flex: 1;
+}
+
+/* Testimonials */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.testimonial {
+  background-color: #ffffff;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stars {
+  color: var(--caramel);
+  letter-spacing: 0.1em;
+  font-size: 1.05rem;
+}
+
+.testimonial p {
+  font-size: 0.95rem;
+  color: var(--text);
+  flex: 1;
+}
+
+.testimonial-author {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.demo-note {
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: var(--espresso);
+  color: var(--cream);
+  padding: 0.85rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--caramel);
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 200;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
