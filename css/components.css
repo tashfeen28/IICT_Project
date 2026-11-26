@@ -498,6 +498,57 @@
   color: var(--color-espresso);
 }
 
+.modal-product-hero {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--color-cream) 0%, #EADAC7 100%);
+}
+
+.modal-product-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-warm);
+  border: 1px solid var(--color-border);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.empty-state h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--color-text-muted);
+  max-width: 46ch;
+  margin-inline: auto;
+  margin-bottom: 1.25rem;
+}
+
+.is-fallback-image {
+  object-fit: contain !important;
+  padding: 1.75rem;
+}
+
 /* Generic Card & Feedback Utilities
    ========================================================================== */
 
