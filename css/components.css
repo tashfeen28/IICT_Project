@@ -496,6 +496,7 @@
 }
 
 /* Coffee Circle button overrides and variants */
+/* Pill-shaped Buttons */
 .btn {
   display: inline-flex;
   align-items: center;

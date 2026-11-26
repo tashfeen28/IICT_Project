@@ -27,12 +27,25 @@
   --shadow-sm: 0 4px 14px rgba(38, 22, 14, 0.06);
   --shadow-md: 0 10px 26px rgba(38, 22, 14, 0.1);
   --transition-base: 0.25s ease;
+:root {
+  --espresso: #3B2418;
+  --coffee: #654321;
+  --cream: #F5EBDD;
+  --beige: #E8D8C3;
+  --caramel: #C68B59;
+  --text: #2d1c13;
+  --muted: #7a6454;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(59, 36, 24, 0.08);
+  --transition: 0.25s ease;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
