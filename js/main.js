@@ -81,15 +81,163 @@
   }
 
   /**
-   * Attach a clean SVG logo fallback if a product image asset is missing.
+   * Inject inline-friendly artwork & badge styles once so product cards always
+   * match the Cold Coffee visual spec.
    */
-  function attachImageFallback(imgEl, root) {
-    if (!imgEl) return;
-    imgEl.addEventListener('error', function handleImgError() {
-      imgEl.removeEventListener('error', handleImgError);
-      imgEl.src = root + 'images/logo.svg';
-      imgEl.classList.add('is-fallback-image');
-    });
+  function ensureProductArtworkStyles() {
+    if (document.getElementById('tcc-product-artwork-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'tcc-product-artwork-styles';
+    style.textContent =
+      '.product-card-media {' +
+      '  background: #E8D8C3;' +
+      '  border-radius: 16px;' +
+      '  min-height: 225px;' +
+      '  display: flex;' +
+      '  align-items: center;' +
+      '  justify-content: center;' +
+      '  position: relative;' +
+      '  padding: 16px;' +
+      '  overflow: hidden;' +
+      '}' +
+      '.bestseller-badge {' +
+      '  position: absolute;' +
+      '  bottom: 12px;' +
+      '  right: 12px;' +
+      '  background: #C69C6D;' +
+      '  color: #24140D;' +
+      '  font-size: 0.76rem;' +
+      '  font-weight: 600;' +
+      '  border-radius: 999px;' +
+      '  padding: 5px 14px;' +
+      '  line-height: 1.25;' +
+      '}';
+    document.head.appendChild(style);
+  }
+
+  /**
+   * Distinct coffee, swirl, foam, and straw palettes for each iced coffee drink.
+   */
+  var DRINK_PALETTES = {
+    'iced-caramel-macchiato': {
+      coffeeBottom: '#432110',
+      coffeeMid: '#8A4E28',
+      foamTop: '#F3E3CE',
+      drizzle: '#C68B59',
+      straw: '#C69C6D',
+      strawStripe: '#FAF6F0',
+      hasDrizzle: true
+    },
+    'cold-brew-classic': {
+      coffeeBottom: '#261209',
+      coffeeMid: '#3E2012',
+      foamTop: '#7B4E33',
+      drizzle: '#5A341E',
+      straw: '#3B2418',
+      strawStripe: '#C69C6D',
+      hasDrizzle: false
+    },
+    'mocha-frappe': {
+      coffeeBottom: '#331A10',
+      coffeeMid: '#6E3F27',
+      foamTop: '#EFE0CE',
+      drizzle: '#4A2511',
+      straw: '#5C3D2E',
+      strawStripe: '#F5ECE0',
+      hasDrizzle: true
+    },
+    'vanilla-sweet-cream-cold-brew': {
+      coffeeBottom: '#2B150B',
+      coffeeMid: '#74482D',
+      foamTop: '#FFF6E6',
+      drizzle: '#EAD5B8',
+      straw: '#C68B59',
+      strawStripe: '#FFFFFF',
+      hasDrizzle: true
+    },
+    'iced-spanish-latte': {
+      coffeeBottom: '#4A2513',
+      coffeeMid: '#B98354',
+      foamTop: '#F7EAD7',
+      drizzle: '#D8AC82',
+      straw: '#A66E3E',
+      strawStripe: '#FAF6F0',
+      hasDrizzle: false
+    },
+    'hazelnut-iced-americano': {
+      coffeeBottom: '#361B0E',
+      coffeeMid: '#6C3D22',
+      foamTop: '#C9966B',
+      drizzle: '#8C5633',
+      straw: '#4A2E20',
+      strawStripe: '#E2B891',
+      hasDrizzle: false
+    }
+  };
+
+  /**
+   * Return whether a product should carry the "Bestseller" pill badge.
+   */
+  function isBestsellerProduct(product) {
+    if (!product) return false;
+    var name = String(product.name || '').toLowerCase();
+    var id = String(product.id || '').toLowerCase();
+    return (
+      id === 'vanilla-sweet-cream-cold-brew' ||
+      name === 'vanilla sweet cream cold brew'
+    );
+  }
+
+  /**
+   * Build the custom inline iced-coffee glass SVG artwork for a drink.
+   */
+  function buildDrinkSvg(product, scopePrefix) {
+    var palette = DRINK_PALETTES[product.id] || DRINK_PALETTES['cold-brew-classic'];
+    var safeId = String((scopePrefix || 'card') + '-' + (product.id || 'drink')).replace(
+      /[^a-zA-Z0-9_-]/g,
+      ''
+    );
+    var clipId = 'glass-clip-' + safeId;
+
+    var drizzleMarkup = palette.hasDrizzle
+      ? '<path d="M62 84 Q78 96 92 86 T120 88 T138 82" fill="none" stroke="' +
+        palette.drizzle +
+        '" stroke-width="3.2" stroke-linecap="round" opacity="0.85" />' +
+        '<path d="M74 102 Q88 122 86 144" fill="none" stroke="' +
+        palette.drizzle +
+        '" stroke-width="2.6" stroke-linecap="round" opacity="0.55" />' +
+        '<path d="M118 96 Q112 118 117 136" fill="none" stroke="' +
+        palette.drizzle +
+        '" stroke-width="2.4" stroke-linecap="round" opacity="0.5" />'
+      : '';
+
+    return (
+      '<svg viewBox="0 0 200 220" width="175" height="190" role="img" aria-label="' +
+      escapeHtml(product.name) +
+      ' illustration">' +
+      '  <defs>' +
+      '    <clipPath id="' + clipId + '">' +
+      '      <path d="M58 58 L69 178 Q70 188 81 188 L119 188 Q130 188 131 178 L142 58 Z" />' +
+      '    </clipPath>' +
+      '  </defs>' +
+      '  <circle cx="100" cy="114" r="76" fill="#F5ECE0" />' +
+      '  <line x1="127" y1="20" x2="112" y2="74" stroke="' + palette.straw + '" stroke-width="7" stroke-linecap="round" />' +
+      '  <line x1="127" y1="20" x2="112" y2="74" stroke="' + palette.strawStripe + '" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="5 6" opacity="0.7" />' +
+      '  <g clip-path="url(#' + clipId + ')">' +
+      '    <rect x="54" y="56" width="92" height="136" fill="' + palette.coffeeBottom + '" />' +
+      '    <path d="M54 96 Q78 88 102 96 T146 92 L146 140 Q120 148 96 138 T54 142 Z" fill="' + palette.coffeeMid + '" opacity="0.88" />' +
+      '    <path d="M54 56 L146 56 L146 94 Q124 102 100 94 T54 96 Z" fill="' + palette.foamTop + '" />' +
+      '    <line x1="114" y1="64" x2="102" y2="152" stroke="' + palette.straw + '" stroke-width="6.5" stroke-linecap="round" opacity="0.38" />' +
+      drizzleMarkup +
+      '    <rect x="72" y="76" width="21" height="19" rx="5" ry="5" fill="rgba(255, 255, 255, 0.30)" stroke="rgba(255, 255, 255, 0.55)" stroke-width="1.5" transform="rotate(-14 82 85)" />' +
+      '    <rect x="104" y="80" width="22" height="20" rx="5" ry="5" fill="rgba(255, 255, 255, 0.28)" stroke="rgba(255, 255, 255, 0.52)" stroke-width="1.5" transform="rotate(16 115 90)" />' +
+      '    <rect x="85" y="106" width="20" height="18" rx="5" ry="5" fill="rgba(255, 255, 255, 0.22)" stroke="rgba(255, 255, 255, 0.42)" stroke-width="1.4" transform="rotate(8 95 115)" />' +
+      '    <path d="M65 66 L74 176" stroke="rgba(255, 255, 255, 0.25)" stroke-width="3.5" stroke-linecap="round" />' +
+      '  </g>' +
+      '  <path d="M58 58 L69 178 Q70 188 81 188 L119 188 Q130 188 131 178 L142 58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />' +
+      '  <ellipse cx="100" cy="58" rx="42" ry="5.5" fill="none" stroke="#FFFFFF" stroke-width="4" />' +
+      '</svg>'
+    );
   }
 
   /**
@@ -441,17 +589,13 @@
       })
       .join('');
 
-    var badgeHtml = product.badge
-      ? '<span class="product-badge">' + escapeHtml(product.badge) + '</span>'
+    var badgeHtml = isBestsellerProduct(product)
+      ? '<span class="bestseller-badge">Bestseller</span>'
       : '';
 
     bodyEl.innerHTML =
       '<div class="modal-product-hero">' +
-      '  <img src="' +
-      escapeHtml(root + product.image) +
-      '" alt="' +
-      escapeHtml(product.name) +
-      '">' +
+      buildDrinkSvg(product, 'modal') +
       badgeHtml +
       '</div>' +
       '<p class="product-description">' +
@@ -478,8 +622,6 @@
       '  </ul>' +
       '</div>' +
       buildOptionsMarkup(product, 'modal');
-
-    attachImageFallback(bodyEl.querySelector('.modal-product-hero img'), root);
 
     // Replace modal dialog listeners cleanly per product open by cloning body/footer button.
     var freshAddBtn = footerAddBtn.cloneNode(true);
@@ -547,17 +689,13 @@
     card.className = 'product-card';
     card.dataset.productId = product.id;
 
-    var badgeHtml = product.badge
-      ? '<span class="product-badge">' + escapeHtml(product.badge) + '</span>'
+    var badgeHtml = isBestsellerProduct(product)
+      ? '<span class="bestseller-badge">Bestseller</span>'
       : '';
 
     card.innerHTML =
       '<div class="product-card-media">' +
-      '  <img class="product-image" src="' +
-      escapeHtml(root + product.image) +
-      '" alt="' +
-      escapeHtml(product.name) +
-      '" loading="lazy">' +
+      buildDrinkSvg(product, 'card') +
       badgeHtml +
       '</div>' +
       '<div class="product-card-body">' +
@@ -579,7 +717,6 @@
       '  </div>' +
       '</div>';
 
-    attachImageFallback(card.querySelector('.product-image'), root);
     bindOptionEvents(card, product);
 
     var quickViewBtn = card.querySelector('[data-action="quick-view"]');
@@ -598,6 +735,8 @@
   function renderProductGrid() {
     var grid = document.getElementById('product-grid');
     if (!grid) return;
+
+    ensureProductArtworkStyles();
 
     var root = getRootPath();
     var matchingProducts = getFilteredProducts();

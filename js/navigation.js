@@ -81,37 +81,188 @@
   }
 
   /**
-   * Build and inject the semantic header into #site-header.
+   * Build and inject the semantic header styles and HTML into #site-header.
    */
   function renderHeader(root, currentPage) {
     var headerHost = document.getElementById('site-header');
     if (!headerHost) return;
 
+    var isMenuSection =
+      currentPage === 'menu.html' ||
+      currentPage === 'cold-coffee.html' ||
+      (document.body && document.body.dataset && Boolean(document.body.dataset.category));
+
     var navItems = [
-      { label: 'Menu', href: root + 'pages/menu.html', file: 'menu.html' },
-      { label: 'Cold Coffee', href: root + 'pages/cold-coffee.html', file: 'cold-coffee.html' },
-      { label: 'Loyalty', href: root + 'pages/loyalty.html', file: 'loyalty.html' },
-      { label: 'Account', href: root + 'pages/account.html', file: 'account.html' },
+      { label: 'Home', href: root + 'index.html', file: 'index.html' },
+      { label: 'About', href: root + 'pages/about.html', file: 'about.html' },
+      { label: 'Menu', href: root + 'pages/menu.html', file: 'menu.html', isMenu: true },
+      { label: 'Loyalty Rewards', href: root + 'pages/loyalty.html', file: 'loyalty.html' },
+      { label: 'My Account', href: root + 'pages/account.html', file: 'account.html', isAccount: true },
+      { label: 'Login / Register', href: root + 'pages/login.html', file: 'login.html' },
       { label: 'Cart', href: root + 'pages/cart.html', file: 'cart.html', isCart: true }
     ];
 
+    var headerStyles =
+      '<style id="tcc-header-styles">' +
+      '  #site-header {' +
+      '    position: sticky;' +
+      '    top: 0;' +
+      '    z-index: 1000;' +
+      '    width: 100%;' +
+      '    background: #3B2418;' +
+      '  }' +
+      '  #site-header .site-header {' +
+      '    width: 100%;' +
+      '    background: #3B2418;' +
+      '    min-height: 68px;' +
+      '    border-bottom: 1px solid rgba(198, 156, 109, 0.25);' +
+      '  }' +
+      '  #site-header .header-inner {' +
+      '    display: flex;' +
+      '    align-items: center;' +
+      '    justify-content: space-between;' +
+      '    gap: 1.25rem;' +
+      '    min-height: 68px;' +
+      '  }' +
+      '  #site-header .brand-logo {' +
+      '    display: inline-flex;' +
+      '    align-items: center;' +
+      '    gap: 0.65rem;' +
+      '    flex-shrink: 0;' +
+      '    text-decoration: none;' +
+      '  }' +
+      '  #site-header .brand-logo img {' +
+      '    width: 36px;' +
+      '    height: 36px;' +
+      '    border-radius: 50%;' +
+      '    object-fit: cover;' +
+      '  }' +
+      '  #site-header .brand-name {' +
+      '    font-family: "Playfair Display", Georgia, "Times New Roman", serif;' +
+      '    font-size: 1.25rem;' +
+      '    font-weight: 700;' +
+      '    color: #FFFFFF;' +
+      '    letter-spacing: -0.01em;' +
+      '  }' +
+      '  #site-header .site-nav {' +
+      '    display: flex;' +
+      '    align-items: center;' +
+      '    margin-left: auto;' +
+      '  }' +
+      '  #site-header .nav-list {' +
+      '    display: flex;' +
+      '    align-items: center;' +
+      '    gap: 0.35rem;' +
+      '    margin: 0;' +
+      '    padding: 0;' +
+      '    list-style: none;' +
+      '  }' +
+      '  #site-header .nav-link,' +
+      '  #site-header .tcc-nav-link {' +
+      '    position: relative;' +
+      '    display: inline-flex;' +
+      '    align-items: center;' +
+      '    gap: 0.45rem;' +
+      '    padding: 7px 12px;' +
+      '    border-radius: 999px;' +
+      '    font-size: 0.9rem;' +
+      '    font-weight: 500;' +
+      '    color: #F5EBDD;' +
+      '    text-decoration: none;' +
+      '    white-space: nowrap;' +
+      '    transition: color 160ms ease, background-color 160ms ease;' +
+      '  }' +
+      '  #site-header .nav-link:hover,' +
+      '  #site-header .tcc-nav-link:hover {' +
+      '    background-color: rgba(245, 235, 221, 0.12);' +
+      '    color: #FFFFFF;' +
+      '  }' +
+      '  #site-header .nav-link.active,' +
+      '  #site-header .tcc-nav-link.active {' +
+      '    background: #C69C6D;' +
+      '    color: #24140D;' +
+      '    border-radius: 999px;' +
+      '    padding: 7px 16px;' +
+      '    font-weight: 600;' +
+      '  }' +
+      '  #site-header .nav-link.active:hover,' +
+      '  #site-header .tcc-nav-link.active:hover {' +
+      '    background: #D1AA7D;' +
+      '    color: #24140D;' +
+      '  }' +
+      '  #site-header .nav-active-dot {' +
+      '    display: inline-block;' +
+      '    width: 6px;' +
+      '    height: 6px;' +
+      '    border-radius: 50%;' +
+      '    background-color: #24140D;' +
+      '    flex-shrink: 0;' +
+      '  }' +
+      '  #site-header .nav-link-cart {' +
+      '    display: inline-flex;' +
+      '    align-items: center;' +
+      '    gap: 0.4rem;' +
+      '    padding: 7px 10px;' +
+      '    color: #FFFFFF;' +
+      '  }' +
+      '  #site-header .nav-cart-icon {' +
+      '    width: 20px;' +
+      '    height: 20px;' +
+      '    display: block;' +
+      '    flex-shrink: 0;' +
+      '  }' +
+      '  @media (max-width: 900px) {' +
+      '    #site-header .nav-link,' +
+      '    #site-header .tcc-nav-link {' +
+      '      justify-content: space-between;' +
+      '      padding: 0.75rem 1rem;' +
+      '      font-size: 1rem;' +
+      '    }' +
+      '    #site-header .nav-link.active,' +
+      '    #site-header .tcc-nav-link.active {' +
+      '      justify-content: flex-start;' +
+      '      padding: 7px 16px;' +
+      '    }' +
+      '  }' +
+      '</style>';
+
+    var bagIconSvg =
+      '<svg class="nav-cart-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '  <path d="M6 7h12l1 13H5L6 7z" />' +
+      '  <path d="M9 7V5a3 3 0 0 1 6 0v2" />' +
+      '</svg>';
+
     var navLinksHtml = navItems
       .map(function (item) {
-        var isActive = currentPage === item.file;
-        var classes = ['nav-link'];
+        var isActive = item.isMenu ? isMenuSection : currentPage === item.file;
+        // Keep "My Account" free of the .nav-link selector that js/auth.js overwrites with "Account".
+        var baseClass = item.isAccount ? 'tcc-nav-link' : 'nav-link';
+        var classes = [baseClass];
         if (item.isCart) classes.push('nav-link-cart');
         if (isActive) classes.push('active');
 
         var activeAttr = isActive ? ' aria-current="page"' : '';
-        var badgeHtml = item.isCart
-          ? ' <span class="cart-badge" id="nav-cart-count" aria-live="polite">0</span>'
+
+        if (item.isCart) {
+          return (
+            '<li>' +
+            '<a class="' + classes.join(' ') + '" href="' + item.href + '"' + activeAttr + ' aria-label="Shopping cart">' +
+            bagIconSvg +
+            '<span class="cart-badge" id="nav-cart-count" aria-live="polite">0</span>' +
+            '</a>' +
+            '</li>'
+          );
+        }
+
+        var dotHtml = isActive && item.isMenu
+          ? '<span class="nav-active-dot" aria-hidden="true"></span>'
           : '';
 
         return (
           '<li>' +
           '<a class="' + classes.join(' ') + '" href="' + item.href + '"' + activeAttr + '>' +
+          dotHtml +
           '<span>' + item.label + '</span>' +
-          badgeHtml +
           '</a>' +
           '</li>'
         );
@@ -119,10 +270,11 @@
       .join('');
 
     headerHost.innerHTML =
+      headerStyles +
       '<header class="site-header">' +
       '  <div class="container header-inner">' +
       '    <a class="brand-logo" href="' + root + 'index.html">' +
-      '      <img src="' + root + 'images/logo.svg" alt="The Coffee Circle logo" width="42" height="42">' +
+      '      <img src="' + root + 'images/logo.svg" alt="The Coffee Circle logo" width="36" height="36">' +
       '      <span class="brand-name">The Coffee Circle</span>' +
       '    </a>' +
       '    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">' +
