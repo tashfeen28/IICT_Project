@@ -33,9 +33,9 @@
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   /* Spacing & Sizing */
-  --container-max: 1200px;
+  --container-max: 1280px;
   --container-pad: 1.5rem;
-  --header-height: 76px;
+  --header-height: 68px;
 
   /* Radii */
   --radius-sm: 6px;
@@ -274,36 +274,38 @@ h3 {
 #site-header {
   position: sticky;
   top: 0;
-  z-index: 900;
+  z-index: 1000;
+  width: 100%;
+  background: #3B2418;
 }
 
 .site-header {
-  background-color: rgba(250, 246, 240, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-xs);
+  width: 100%;
+  background: #3B2418;
+  min-height: 68px;
+  border-bottom: 1px solid rgba(198, 156, 109, 0.25);
+  box-shadow: var(--shadow-sm);
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  min-height: var(--header-height);
+  gap: 1.25rem;
+  min-height: 68px;
 }
 
 .brand-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   flex-shrink: 0;
   text-decoration: none;
 }
 
 .brand-logo img {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   transition: transform var(--transition-base);
 }
@@ -316,19 +318,20 @@ h3 {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-espresso-dark);
+  color: #FFFFFF;
   letter-spacing: -0.01em;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .nav-link {
@@ -336,40 +339,65 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.55rem 0.95rem;
-  border-radius: var(--radius-pill);
-  font-size: 0.94rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: var(--color-espresso);
+  color: #F5EBDD;
+  white-space: nowrap;
   transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .nav-link:hover {
-  background-color: var(--color-cream);
-  color: var(--color-espresso-dark);
+  background-color: rgba(245, 235, 221, 0.12);
+  color: #FFFFFF;
 }
 
 .nav-link.active {
-  background-color: var(--color-espresso);
-  color: var(--color-cream-light);
+  background: #C69C6D;
+  color: #24140D;
+  border-radius: 999px;
+  padding: 6px 16px;
   font-weight: 600;
 }
 
+.nav-link.active:hover {
+  background: #D1AA7D;
+  color: #24140D;
+}
+
+.nav-active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #24140D;
+  flex-shrink: 0;
+}
+
 .nav-link-cart {
-  background-color: var(--color-cream);
-  border: 1px solid var(--color-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 6px 10px;
+  color: #FFFFFF;
   font-weight: 600;
 }
 
 .nav-link-cart:hover {
-  border-color: var(--color-gold);
-  background-color: #EFE1CF;
+  background-color: rgba(245, 235, 221, 0.14);
+  color: #FFFFFF;
 }
 
 .nav-link-cart.active {
-  background-color: var(--color-espresso);
-  border-color: var(--color-espresso);
-  color: var(--color-cream-light);
+  background: #C69C6D;
+  color: #24140D;
+  padding: 6px 14px;
+}
+
+.nav-cart-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* Mobile Hamburger Toggle */
@@ -379,24 +407,24 @@ h3 {
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   padding: 0;
-  background-color: var(--color-cream);
-  border: 1px solid var(--color-border-strong);
+  background-color: rgba(245, 235, 221, 0.1);
+  border: 1px solid rgba(245, 235, 221, 0.28);
   border-radius: var(--radius-sm);
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .nav-toggle:hover {
-  background-color: var(--color-border);
+  background-color: rgba(245, 235, 221, 0.2);
 }
 
 .nav-toggle-bar {
   display: block;
   width: 20px;
   height: 2px;
-  background-color: var(--color-espresso-dark);
+  background-color: #FFFFFF;
   border-radius: 2px;
   transition: transform var(--transition-base), opacity var(--transition-fast);
 }

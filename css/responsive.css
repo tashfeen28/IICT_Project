@@ -19,8 +19,8 @@
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .footer-grid {
@@ -29,14 +29,10 @@
   }
 }
 
-/* Mobile & Tablet Navigation Breakpoint (<= 768px)
+/* Mobile & Tablet Navigation Breakpoint (<= 900px)
    ========================================================================== */
 
-@media (max-width: 768px) {
-  :root {
-    --header-height: 68px;
-  }
-
+@media (max-width: 900px) {
   .header-inner {
     position: relative;
   }
@@ -52,9 +48,10 @@
     right: calc(var(--container-pad) * -1);
     z-index: 950;
     display: none;
+    margin-left: 0;
     padding: 1rem var(--container-pad) 1.35rem;
-    background-color: var(--color-cream-light);
-    border-bottom: 2px solid var(--color-gold);
+    background-color: #3B2418;
+    border-bottom: 2px solid #C69C6D;
     box-shadow: var(--shadow-md);
   }
 
@@ -75,6 +72,21 @@
     font-size: 1rem;
   }
 
+  .nav-link.active,
+  .nav-link-cart.active {
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+  }
+}
+
+/* Mobile Layout (<= 640px)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  :root {
+    --container-pad: 1rem;
+  }
+
   .page-hero {
     padding-block: 3rem 2.75rem;
   }
@@ -84,8 +96,8 @@
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .button-row {
@@ -118,21 +130,13 @@
    ========================================================================== */
 
 @media (max-width: 480px) {
-  :root {
-    --container-pad: 1rem;
-  }
-
   .brand-name {
     font-size: 1.1rem;
   }
 
   .brand-logo img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .product-grid {
-    grid-template-columns: 1fr;
+    width: 32px;
+    height: 32px;
   }
 
   .product-actions {
