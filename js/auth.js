@@ -138,9 +138,9 @@
   });
   window.addEventListener('auth:updated', updateAccountNav);
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', observeHeaderInjection);
-  } else {
+  if (document.readyState !== 'loading' || document.getElementById('site-header')) {
     observeHeaderInjection();
+  } else {
+    document.addEventListener('DOMContentLoaded', observeHeaderInjection);
   }
 })();

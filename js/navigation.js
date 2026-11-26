@@ -12,7 +12,8 @@
   function getRootPath() {
     var rawRoot = document.body && document.body.dataset ? document.body.dataset.root : '';
     if (!rawRoot) {
-      rawRoot = window.location.pathname.indexOf('/pages/') !== -1 ? '../' : './';
+      var normalizedPath = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
+      rawRoot = normalizedPath.indexOf('/pages/') !== -1 ? '../' : './';
     }
     return rawRoot.charAt(rawRoot.length - 1) === '/' ? rawRoot : rawRoot + '/';
   }
@@ -21,7 +22,7 @@
    * Determine the current page filename for active link highlighting.
    */
   function getCurrentPageName() {
-    var path = window.location.pathname || '';
+    var path = (window.location.pathname || '').replace(/\\/g, '/');
     var segment = path.split('/').pop();
     return segment || 'index.html';
   }
@@ -242,6 +243,10 @@
     var currentPage = getCurrentPageName();
     renderHeader(root, currentPage);
     renderFooter(root);
+
+    if (window.Auth && typeof window.Auth.updateAccountNav === 'function') {
+      window.Auth.updateAccountNav();
+    }
   }
 
   // Expose badge updater so cart scripts can refresh the count immediately.
@@ -252,9 +257,13 @@
   document.addEventListener('cart:updated', updateCartBadge);
   document.addEventListener('cartUpdated', updateCartBadge);
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNavigation);
-  } else {
+  if (
+    document.readyState !== 'loading' ||
+    document.getElementById('site-header') ||
+    document.getElementById('site-footer')
+  ) {
     initNavigation();
+  } else {
+    document.addEventListener('DOMContentLoaded', initNavigation);
   }
 })();

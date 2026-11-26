@@ -15,7 +15,8 @@
   function getRootPath() {
     var rawRoot = document.body && document.body.dataset ? document.body.dataset.root : '';
     if (!rawRoot) {
-      rawRoot = window.location.pathname.indexOf('/pages/') !== -1 ? '../' : './';
+      var normalizedPath = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
+      rawRoot = normalizedPath.indexOf('/pages/') !== -1 ? '../' : './';
     }
     return rawRoot.charAt(rawRoot.length - 1) === '/' ? rawRoot : rawRoot + '/';
   }
@@ -186,12 +187,12 @@
       } catch (err) {
         // Ignore storage quota or private-browsing errors.
       }
-    }
 
-    if (typeof window.updateCartBadge === 'function') {
-      window.updateCartBadge();
+      if (typeof window.updateCartBadge === 'function') {
+        window.updateCartBadge();
+      }
+      window.dispatchEvent(new CustomEvent('cart:updated', { detail: cartItem }));
     }
-    window.dispatchEvent(new CustomEvent('cart:updated', { detail: cartItem }));
 
     var extrasSummary =
       selectedExtras.length > 0 ? ' + ' + selectedExtras.length + ' extra(s)' : '';
@@ -622,9 +623,9 @@
     grid.appendChild(fragment);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderProductGrid);
-  } else {
+  if (document.readyState !== 'loading' || document.getElementById('product-grid')) {
     renderProductGrid();
+  } else {
+    document.addEventListener('DOMContentLoaded', renderProductGrid);
   }
 })();
