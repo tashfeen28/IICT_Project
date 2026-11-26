@@ -35,3 +35,9 @@ Rename css/components.css to css/components_26i3066.css, and update pages/cold-c
 
 Response 3:
 Renamed css/components.css to css/components_26i3066.css and updated the stylesheet link in pages/cold-coffee.html to ../css/components_26i3066.css so the Cold Coffee page styles remain isolated from other branches without merge conflicts.
+
+Prompt 4:
+Compare the current branch (i263066) against origin/main to identify every CSS and JS file in css/ and js/ that was added or modified on this branch (such as js/main.js, js/navigation.js, js/products.js, and any remaining files in css/ or js/). Rename all of those added or modified CSS and JS files to include _26i3066 before the file extension, leave untouched origin/main files unchanged, and update all <link> and <script> references in pages/cold-coffee.html to point to the _26i3066 filenames.
+
+Response 4:
+Renamed all added and modified CSS and JS files on branch i263066 to include the _26i3066 suffix and updated all stylesheet and script tags in pages/cold-coffee.html so all custom assets remain isolated during merge into main.
