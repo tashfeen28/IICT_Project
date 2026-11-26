@@ -1,5 +1,0 @@
-# The Coffee Circle - DEMO accounts (plain text on purpose, for the university demo).
-# Format: username,email,password,full name,starting loyalty points
-# These are made-up credentials. Never put real passwords in this file.
-demo,demo@coffeecircle.test,demo123,Demo Customer,150
-tester,tester@coffeecircle.test,test1234,Test Student,0
