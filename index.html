@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Coffee Circle — Handcrafted Coffee &amp; Loyalty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="The Coffee Circle Home">
+        <svg class="brand-logo" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#C68B59" />
+          <circle cx="32" cy="32" r="24" fill="#3B2418" />
+          <path d="M21 27h18v10a9 9 0 0 1-18 0V27Z" fill="#F5EBDD" />
+          <path d="M39 29h3a4 4 0 0 1 0 8h-3" stroke="#F5EBDD" stroke-width="2.6" stroke-linecap="round" />
+          <path d="M26 22c0-2 1.5-3 1.5-4.5M32 22c0-2 1.5-3 1.5-4.5" stroke="#C68B59" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+        <span>The Coffee Circle</span>
+      </a>
+
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="pages/about.html" class="nav-link">About</a></li>
+          <li class="nav-dropdown" id="menu-dropdown">
+            <a href="pages/menu.html" class="nav-link" aria-haspopup="true" aria-expanded="false">
+              Menu <span aria-hidden="true">&#9662;</span>
+            </a>
+            <ul class="dropdown-menu" aria-label="Coffee Categories">
+              <li><a href="pages/menu.html">All Coffee</a></li>
+              <li><a href="pages/menu.html?category=cappuccino">Cappuccino</a></li>
+              <li><a href="pages/menu.html?category=espresso">Espresso</a></li>
+              <li><a href="pages/menu.html?category=latte">Latte</a></li>
+              <li><a href="pages/menu.html?category=cold-coffee">Cold Coffee</a></li>
+              <li><a href="pages/menu.html?category=signature">Signature Drinks</a></li>
+            </ul>
+          </li>
+          <li><a href="pages/loyalty.html" class="nav-link">Loyalty Rewards</a></li>
+          <li><a href="pages/account.html" class="nav-link">My Account</a></li>
+          <li><a href="pages/auth.html" class="nav-link">Login</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="pages/cart.html" class="cart-link" aria-label="Shopping Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="hero-pill">Your Daily Dose of Comfort</span>
+          <h1>Every Great Day Begins with Coffee.</h1>
+          <p class="hero-lead">
+            Savor handcrafted espresso, velvety cappuccinos, and cold brews made to order—and earn loyalty points on every cup you enjoy.
+          </p>
+          <div class="hero-actions">
+            <a href="pages/menu.html" class="btn btn-caramel">Shop Now</a>
+            <a href="pages/menu.html" class="btn btn-outline-light">Explore Our Menu</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-ring-wrap">
+            <div class="hero-ring" aria-hidden="true"></div>
+            <svg class="hero-cup" viewBox="0 0 240 240" fill="none" aria-label="Cappuccino illustration">
+              <circle cx="120" cy="120" r="96" fill="#F5EBDD" />
+              <circle cx="120" cy="120" r="82" fill="#E8D8C3" />
+              <circle cx="120" cy="120" r="70" fill="#654321" />
+              <circle cx="120" cy="120" r="62" fill="#C68B59" />
+              <path d="M120 76c14 14 28 24 28 40a28 28 0 0 1-56 0c0-16 14-26 28-40Z" fill="#F5EBDD" />
+              <path d="M120 92c8 9 16 16 16 25a16 16 0 0 1-32 0c0-9 8-16 16-25Z" fill="#C68B59" />
+              <rect x="196" y="108" width="28" height="24" rx="12" fill="#F5EBDD" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow">Curated Picks</span>
+            <h2>Featured Drinks</h2>
+          </div>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt reveal">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow">Community Favorites</span>
+            <h2>Bestsellers</h2>
+          </div>
+        </div>
+        <div class="product-grid" id="bestseller-grid"></div>
+        <div class="section-footer">
+          <a href="pages/menu.html" class="btn btn-primary">See the full menu</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container split">
+        <div class="split-content">
+          <span class="section-eyebrow">Our Story</span>
+          <h2>A cosy corner for coffee lovers</h2>
+          <p>
+            From single-origin beans roasted in small batches to custom milk and flavor pairings, The Coffee Circle is built around warmth, craft, and everyday rituals.
+          </p>
+          <a href="pages/about.html" class="btn btn-outline">Read Our Story</a>
+        </div>
+
+        <div class="feature-list">
+          <article class="feature">
+            <span class="feature-num">1</span>
+            <div>
+              <h3>Freshly roasted</h3>
+              <p>Small-batch beans roasted weekly for rich aroma, balanced acidity, and a smooth finish in every cup.</p>
+            </div>
+          </article>
+          <article class="feature">
+            <span class="feature-num">2</span>
+            <div>
+              <h3>Made your way</h3>
+              <p>Choose your roast, milk, sweetness, and temperature—crafted fresh to match your exact mood.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Coffee Circle. Crafted with care.</p>
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById('nav-toggle');
+    const primaryNav = document.getElementById('primary-nav');
+    const menuDropdown = document.getElementById('menu-dropdown');
+
+    if (navToggle && primaryNav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = primaryNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    if (menuDropdown) {
+      const trigger = menuDropdown.querySelector('.nav-link');
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+          const isOpen = menuDropdown.classList.toggle('open');
+          trigger.setAttribute('aria-expanded', String(isOpen));
+        }
+      });
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach((el) => observer.observe(el));
+    } else {
+      reveals.forEach((el) => el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
