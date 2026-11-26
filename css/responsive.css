@@ -1,3 +1,126 @@
+/* Responsive layout, product grid, and navbar adjustments for The Coffee Circle */
+
+@media (min-width: 992px) {
+  .coffee-navbar .navbar-nav {
+    flex-wrap: nowrap;
+  }
+
+  .coffee-navbar .nav-link.active:not(.nav-menu-pill):not(.nav-cart-link)::after {
+    content: "";
+    position: absolute;
+    left: 0.72rem;
+    right: 0.72rem;
+    bottom: 0.15rem;
+    height: 2px;
+    background-color: var(--coffee-accent);
+    border-radius: 2px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .coffee-navbar .nav-link {
+    font-size: 0.83rem;
+    padding: 0.42rem 0.52rem;
+  }
+
+  .coffee-navbar .nav-link.nav-menu-pill {
+    padding: 0.36rem 0.78rem;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 991.98px) {
+  .coffee-navbar .navbar-collapse {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(245, 235, 221, 0.15);
+  }
+
+  .coffee-navbar .nav-link {
+    padding: 0.6rem 0.25rem;
+  }
+
+  .coffee-navbar .nav-link.active {
+    color: var(--coffee-accent);
+  }
+
+  .coffee-navbar .nav-link.nav-menu-pill {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.42rem 0.95rem;
+    margin: 0.2rem 0;
+    color: var(--coffee-cream);
+  }
+
+  .coffee-dropdown-menu {
+    background-color: rgba(59, 36, 24, 0.85);
+    border-color: rgba(229, 180, 134, 0.24);
+    margin-bottom: 0.35rem;
+  }
+
+  .coffee-navbar .nav-link.nav-cart-link {
+    width: fit-content;
+    margin-left: 0;
+    margin-top: 0.35rem;
+    padding: 0.45rem 0.55rem 0.45rem 0.25rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-text {
+    font-size: 1.08rem;
+  }
+
+  .page-hero {
+    padding: 3rem 0 2.65rem;
+  }
+
+  .section {
+    padding: 2.25rem 0 3rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-row .btn {
+    width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-inner,
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 @media (max-width: 992px) {
   .hero-grid,
   .split {
