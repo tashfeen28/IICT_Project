@@ -205,6 +205,25 @@
       '    padding: 7px 10px;' +
       '    color: #FFFFFF;' +
       '  }' +
+      '  #site-header .nav-link-cart:hover {' +
+      '    background-color: rgba(245, 235, 221, 0.14);' +
+      '    color: #FFFFFF;' +
+      '  }' +
+      '  #site-header .nav-link-cart.active {' +
+      '    background: #C69C6D;' +
+      '    color: #24140D;' +
+      '    border-radius: 999px;' +
+      '    padding: 7px 14px;' +
+      '    font-weight: 600;' +
+      '  }' +
+      '  #site-header .nav-link-cart.active:hover {' +
+      '    background: #D1AA7D;' +
+      '    color: #24140D;' +
+      '  }' +
+      '  #site-header .nav-link-cart.active .cart-badge {' +
+      '    background-color: #3B2418;' +
+      '    color: #FAF6F0;' +
+      '  }' +
       '  #site-header .nav-cart-icon {' +
       '    width: 20px;' +
       '    height: 20px;' +
@@ -227,7 +246,7 @@
       '</style>';
 
     var bagIconSvg =
-      '<svg class="nav-cart-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<svg class="nav-cart-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '  <path d="M6 7h12l1 13H5L6 7z" />' +
       '  <path d="M9 7V5a3 3 0 0 1 6 0v2" />' +
       '</svg>';
