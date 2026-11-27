@@ -1,0 +1,180 @@
+/* ==========================================================================
+   The Coffee Circle — Responsive Breakpoints & Accessibility Preferences
+   ========================================================================== */
+
+/* Tablet & Small Desktop (<= 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  :root {
+    --container-pad: 1.25rem;
+  }
+
+  .section {
+    padding-block: 3.25rem;
+  }
+
+  .page-hero {
+    padding-block: 3.75rem 3.25rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Mobile & Tablet Navigation Breakpoint (<= 900px)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .header-inner {
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: calc(var(--container-pad) * -1);
+    right: calc(var(--container-pad) * -1);
+    z-index: 950;
+    display: none;
+    margin-left: 0;
+    padding: 1rem var(--container-pad) 1.35rem;
+    background-color: #3B2418;
+    border-bottom: 2px solid #C69C6D;
+    box-shadow: var(--shadow-md);
+  }
+
+  .site-nav.is-open {
+    display: block;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  .nav-link {
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+  }
+
+  .nav-link.active,
+  .nav-link-cart.active {
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+  }
+}
+
+/* Mobile Layout (<= 640px)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  :root {
+    --container-pad: 1rem;
+  }
+
+  .page-hero {
+    padding-block: 3rem 2.75rem;
+  }
+
+  .section {
+    padding-block: 2.75rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .button-row {
+    margin-top: 2.25rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal,
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-inline: 1.15rem;
+  }
+}
+
+/* Small Mobile (<= 480px)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .brand-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-row .btn {
+    width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
+
+/* Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
