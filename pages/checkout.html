@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout – The Coffee Circle. Enter your delivery details and payment information to complete your order." />
+  <title>Checkout | The Coffee Circle</title>
+
+  <!-- Google Fonts (self-contained selection for this page) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Page-specific stylesheet -->
+  <link rel="stylesheet" href="../css/checkout_26i-3272.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════ TOP NAV ═══════════════════════════ -->
+  <header class="co-nav" role="banner">
+    <div class="co-nav__inner">
+      <a href="../index.html" class="co-nav__brand" aria-label="The Coffee Circle – go to homepage">
+        <span class="co-nav__brand-icon" aria-hidden="true">☕</span>
+        <span class="co-nav__brand-text">The Coffee Circle</span>
+      </a>
+
+      <nav class="co-nav__links" aria-label="Site navigation">
+        <a href="../index.html" class="co-nav__link">Home</a>
+        <a href="cart.html" class="co-nav__link co-nav__link--cart">
+          <span aria-hidden="true">🛒</span> Cart
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════ MAIN ════════════════════════════ -->
+  <main id="main" class="co-main" aria-label="Checkout">
+
+    <!-- Page heading -->
+    <section class="co-page-hero" aria-labelledby="co-page-title">
+      <div class="co-container">
+        <p class="co-eyebrow">Almost there</p>
+        <h1 id="co-page-title" class="co-page-hero__title">Checkout</h1>
+        <p class="co-page-hero__sub">Fill in your details, review your order, and place it below.</p>
+      </div>
+    </section>
+
+    <!-- Two-column layout -->
+    <section class="co-checkout-section" aria-label="Checkout form and order summary">
+      <div class="co-container co-checkout-grid">
+
+        <!-- ─── LEFT: Forms ─── -->
+        <div class="co-col-form">
+
+          <!-- Contact & Delivery -->
+          <form id="checkout-form" class="co-form" novalidate aria-label="Delivery and payment form">
+
+            <fieldset class="co-fieldset">
+              <legend class="co-fieldset__legend">
+                <span class="co-step-badge" aria-hidden="true">1</span>
+                Contact &amp; Delivery
+              </legend>
+
+              <!-- Full Name -->
+              <div class="co-field">
+                <label for="co-full-name" class="co-label">Full Name <span class="co-required" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="co-full-name"
+                  name="fullName"
+                  class="co-input"
+                  placeholder="e.g. Aisha Rahman"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                />
+                <span class="co-field-error" id="co-full-name-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Email -->
+              <div class="co-field">
+                <label for="co-email" class="co-label">Email Address <span class="co-required" aria-hidden="true">*</span></label>
+                <input
+                  type="email"
+                  id="co-email"
+                  name="email"
+                  class="co-input"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
+                <span class="co-field-error" id="co-email-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Phone -->
+              <div class="co-field">
+                <label for="co-phone" class="co-label">Phone Number <span class="co-required" aria-hidden="true">*</span></label>
+                <input
+                  type="tel"
+                  id="co-phone"
+                  name="phone"
+                  class="co-input"
+                  placeholder="+92 300 0000000"
+                  autocomplete="tel"
+                  required
+                  aria-required="true"
+                />
+                <span class="co-field-error" id="co-phone-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Delivery vs Pickup -->
+              <div class="co-field co-field--radio-group" role="group" aria-labelledby="co-fulfillment-label">
+                <span id="co-fulfillment-label" class="co-label">Fulfillment Method <span class="co-required" aria-hidden="true">*</span></span>
+                <div class="co-radio-row">
+                  <label class="co-radio-card">
+                    <input type="radio" name="fulfillment" value="delivery" id="co-radio-delivery" checked />
+                    <span class="co-radio-card__inner">
+                      <span class="co-radio-card__icon" aria-hidden="true">🚚</span>
+                      <span class="co-radio-card__text">Delivery</span>
+                    </span>
+                  </label>
+                  <label class="co-radio-card">
+                    <input type="radio" name="fulfillment" value="pickup" id="co-radio-pickup" />
+                    <span class="co-radio-card__inner">
+                      <span class="co-radio-card__icon" aria-hidden="true">🏪</span>
+                      <span class="co-radio-card__text">Pickup</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Delivery Address (shown only for delivery) -->
+              <div class="co-field co-delivery-only" id="co-address-block">
+                <label for="co-address" class="co-label">Delivery Address <span class="co-required" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="co-address"
+                  name="address"
+                  class="co-input"
+                  placeholder="Street address, apartment, floor…"
+                  autocomplete="street-address"
+                  aria-required="true"
+                />
+                <span class="co-field-error" id="co-address-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- City (shown only for delivery) -->
+              <div class="co-field co-delivery-only" id="co-city-block">
+                <label for="co-city" class="co-label">City <span class="co-required" aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="co-city"
+                  name="city"
+                  class="co-input"
+                  placeholder="e.g. Lahore"
+                  autocomplete="address-level2"
+                  aria-required="true"
+                />
+                <span class="co-field-error" id="co-city-error" role="alert" aria-live="polite"></span>
+              </div>
+
+              <!-- Delivery Notes -->
+              <div class="co-field co-delivery-only" id="co-notes-block">
+                <label for="co-notes" class="co-label">Delivery Notes <span class="co-optional">(optional)</span></label>
+                <textarea
+                  id="co-notes"
+                  name="notes"
+                  class="co-input co-textarea"
+                  placeholder="Landmark, gate code, special instructions…"
+                  rows="3"
+                  aria-required="false"
+                ></textarea>
+              </div>
+
+            </fieldset>
+
+            <!-- ─── Payment ─── -->
+            <fieldset class="co-fieldset" id="co-payment-fieldset">
+              <legend class="co-fieldset__legend">
+                <span class="co-step-badge" aria-hidden="true">2</span>
+                Payment Method
+              </legend>
+
+              <!-- Payment method selector -->
+              <div class="co-field co-field--radio-group" role="group" aria-labelledby="co-payment-label">
+                <span id="co-payment-label" class="co-label sr-only">Select payment method</span>
+                <div class="co-payment-tabs" id="co-payment-tabs">
+                  <label class="co-payment-tab">
+                    <input type="radio" name="paymentMethod" value="card" id="co-pay-card" checked />
+                    <span class="co-payment-tab__inner">
+                      <span class="co-payment-tab__icon" aria-hidden="true">💳</span>
+                      Card
+                    </span>
+                  </label>
+                  <label class="co-payment-tab">
+                    <input type="radio" name="paymentMethod" value="cod" id="co-pay-cod" />
+                    <span class="co-payment-tab__inner">
+                      <span class="co-payment-tab__icon" aria-hidden="true">💵</span>
+                      Cash on Delivery
+                    </span>
+                  </label>
+                  <label class="co-payment-tab">
+                    <input type="radio" name="paymentMethod" value="wallet" id="co-pay-wallet" />
+                    <span class="co-payment-tab__inner">
+                      <span class="co-payment-tab__icon" aria-hidden="true">📱</span>
+                      Digital Wallet
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Card panel -->
+              <div id="co-panel-card" class="co-payment-panel co-payment-panel--active" aria-label="Card payment details">
+                <div class="co-field">
+                  <label for="co-card-name" class="co-label">Name on Card <span class="co-required" aria-hidden="true">*</span></label>
+                  <input type="text" id="co-card-name" name="cardName" class="co-input" placeholder="As printed on card" autocomplete="cc-name" />
+                  <span class="co-field-error" id="co-card-name-error" role="alert" aria-live="polite"></span>
+                </div>
+                <div class="co-field">
+                  <label for="co-card-number" class="co-label">Card Number <span class="co-required" aria-hidden="true">*</span></label>
+                  <input type="text" id="co-card-number" name="cardNumber" class="co-input co-input--mono" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" aria-describedby="co-card-number-hint" />
+                  <span class="co-field-hint" id="co-card-number-hint">16-digit card number</span>
+                  <span class="co-field-error" id="co-card-number-error" role="alert" aria-live="polite"></span>
+                </div>
+                <div class="co-field-row">
+                  <div class="co-field">
+                    <label for="co-card-expiry" class="co-label">Expiry <span class="co-required" aria-hidden="true">*</span></label>
+                    <input type="text" id="co-card-expiry" name="cardExpiry" class="co-input co-input--mono" placeholder="MM / YY" maxlength="7" inputmode="numeric" autocomplete="cc-exp" />
+                    <span class="co-field-error" id="co-card-expiry-error" role="alert" aria-live="polite"></span>
+                  </div>
+                  <div class="co-field">
+                    <label for="co-card-cvv" class="co-label">CVV <span class="co-required" aria-hidden="true">*</span></label>
+                    <input type="password" id="co-card-cvv" name="cardCVV" class="co-input co-input--mono" placeholder="•••" maxlength="4" inputmode="numeric" autocomplete="cc-csc" aria-describedby="co-cvv-hint" />
+                    <span class="co-field-hint" id="co-cvv-hint">3–4 digits on the back</span>
+                    <span class="co-field-error" id="co-card-cvv-error" role="alert" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cash on Delivery panel -->
+              <div id="co-panel-cod" class="co-payment-panel" aria-label="Cash on delivery details" aria-hidden="true">
+                <div class="co-info-banner co-info-banner--warm">
+                  <span aria-hidden="true">💵</span>
+                  <div>
+                    <strong>Pay in cash when your order arrives.</strong>
+                    <p>Please have the exact amount ready. Our rider will not carry change.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Digital Wallet panel -->
+              <div id="co-panel-wallet" class="co-payment-panel" aria-label="Digital wallet details" aria-hidden="true">
+                <div class="co-field">
+                  <label for="co-wallet-type" class="co-label">Select Wallet <span class="co-required" aria-hidden="true">*</span></label>
+                  <select id="co-wallet-type" name="walletType" class="co-input co-select">
+                    <option value="" disabled selected>Choose wallet…</option>
+                    <option value="jazzcash">JazzCash</option>
+                    <option value="easypaisa">Easypaisa</option>
+                    <option value="nayapay">NayaPay</option>
+                    <option value="sadapay">SadaPay</option>
+                  </select>
+                  <span class="co-field-error" id="co-wallet-type-error" role="alert" aria-live="polite"></span>
+                </div>
+                <div class="co-field">
+                  <label for="co-wallet-number" class="co-label">Registered Mobile Number <span class="co-required" aria-hidden="true">*</span></label>
+                  <input type="tel" id="co-wallet-number" name="walletNumber" class="co-input" placeholder="+92 3XX XXXXXXX" inputmode="tel" autocomplete="tel" />
+                  <span class="co-field-error" id="co-wallet-number-error" role="alert" aria-live="polite"></span>
+                </div>
+                <div class="co-info-banner">
+                  <span aria-hidden="true">📱</span>
+                  <div>
+                    <strong>You will receive a payment request on your app.</strong>
+                    <p>Approve the request within 5 minutes to confirm your order.</p>
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+
+          </form><!-- /#checkout-form -->
+        </div><!-- /.co-col-form -->
+
+        <!-- ─── RIGHT: Order Summary ─── -->
+        <div class="co-col-summary">
+          <div class="co-summary-card" aria-label="Order summary">
+
+            <div class="co-summary-card__header">
+              <h2 class="co-summary-card__title">
+                <span aria-hidden="true">🧾</span> Order Summary
+              </h2>
+            </div>
+
+            <!-- Sample-order helper (hidden when cart has items) -->
+            <div id="co-sample-bar" class="co-sample-bar" aria-label="Empty cart notice">
+              <span>🛒 Cart is empty — load a sample to test the checkout flow.</span>
+              <button type="button" id="co-load-sample-btn" class="co-btn co-btn--sample">
+                Load Sample Coffee Order
+              </button>
+            </div>
+
+            <!-- Items list -->
+            <ul id="checkout-items" class="co-items-list" aria-label="Items in your order" aria-live="polite">
+              <!-- Populated by checkout_26i-3272.js -->
+              <li class="co-items-empty" id="co-items-empty">
+                <span aria-hidden="true">🛒</span>
+                <span>Your cart is empty.</span>
+                <a href="cart.html" class="co-link">Go back to cart</a>
+              </li>
+            </ul>
+
+            <!-- Totals -->
+            <div class="co-summary-totals" aria-label="Price breakdown">
+              <div class="co-summary-row">
+                <span class="co-summary-row__label">Items (<span id="co-item-count">0</span>)</span>
+                <span class="co-summary-row__value" id="co-subtotal">PKR 0</span>
+              </div>
+              <div class="co-summary-row" id="co-delivery-row">
+                <span class="co-summary-row__label">Delivery Fee</span>
+                <span class="co-summary-row__value" id="co-delivery-fee">PKR 150</span>
+              </div>
+              <div class="co-summary-row">
+                <span class="co-summary-row__label">Service Charge (5%)</span>
+                <span class="co-summary-row__value" id="co-service-charge">PKR 0</span>
+              </div>
+              <div class="co-summary-divider" role="separator"></div>
+              <div class="co-summary-row co-summary-row--grand">
+                <span class="co-summary-row__label">Grand Total</span>
+                <span class="co-summary-row__value" id="co-grand-total">PKR 0</span>
+              </div>
+            </div>
+
+            <!-- Free-delivery threshold hint -->
+            <p id="co-threshold-hint" class="co-threshold-hint" aria-live="polite"></p>
+
+            <!-- Place Order CTA -->
+            <div class="co-summary-cta">
+              <button
+                type="submit"
+                form="checkout-form"
+                id="co-place-order-btn"
+                class="co-btn co-btn--primary co-btn--full"
+                aria-describedby="co-btn-hint"
+              >
+                Place Order
+              </button>
+              <p class="co-btn-hint" id="co-btn-hint">
+                By placing your order you agree to our <a href="#" class="co-link">Terms &amp; Conditions</a>.
+              </p>
+            </div>
+
+            <!-- Order confirmation (hidden until order placed) -->
+            <div
+              id="order-confirmation"
+              class="co-confirmation"
+              role="status"
+              aria-live="assertive"
+              aria-atomic="true"
+              hidden
+            >
+              <div class="co-confirmation__icon" aria-hidden="true">✅</div>
+              <h2 class="co-confirmation__title">Order Placed!</h2>
+              <p class="co-confirmation__msg">
+                Thank you! Confirmation will be sent to <strong id="co-confirm-email"></strong>.
+              </p>
+              <p class="co-confirmation__id">
+                Order ID: <strong id="co-order-id"></strong>
+              </p>
+
+              <!-- Item breakdown injected by JS -->
+              <div id="co-confirm-items-table" style="width:100%;text-align:left"></div>
+
+              <!-- Totals breakdown -->
+              <div class="co-summary-totals" style="width:100%;background:rgba(255,255,255,.55);border-radius:8px;padding:.75rem 1rem;margin-top:.25rem">
+                <div class="co-summary-row">
+                  <span class="co-summary-row__label">Subtotal</span>
+                  <span class="co-summary-row__value" id="co-confirm-subtotal">—</span>
+                </div>
+                <div class="co-summary-row">
+                  <span class="co-summary-row__label">Delivery</span>
+                  <span class="co-summary-row__value" id="co-confirm-delivery">—</span>
+                </div>
+                <div class="co-summary-row">
+                  <span class="co-summary-row__label">Service (5%)</span>
+                  <span class="co-summary-row__value" id="co-confirm-service">—</span>
+                </div>
+                <div class="co-summary-divider" role="separator"></div>
+                <div class="co-summary-row co-summary-row--grand">
+                  <span class="co-summary-row__label">Total Paid</span>
+                  <span class="co-summary-row__value" id="co-confirm-grand">—</span>
+                </div>
+              </div>
+
+              <a href="../index.html" class="co-btn co-btn--secondary" style="margin-top:.5rem">Back to Home</a>
+            </div>
+
+          </div><!-- /.co-summary-card -->
+        </div><!-- /.co-col-summary -->
+
+      </div><!-- /.co-checkout-grid -->
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════ FOOTER ════════════════════════════ -->
+  <footer class="co-footer" role="contentinfo">
+    <div class="co-container co-footer__inner">
+      <span class="co-footer__brand">☕ The Coffee Circle</span>
+      <span class="co-footer__copy">&copy; 2026 The Coffee Circle. All rights reserved.</span>
+      <nav class="co-footer__links" aria-label="Footer navigation">
+        <a href="../index.html" class="co-footer__link">Home</a>
+        <a href="cart.html" class="co-footer__link">Cart</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Page-specific script -->
+  <script src="../js/checkout_26i-3272.js"></script>
+</body>
+</html>
