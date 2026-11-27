@@ -522,3 +522,45 @@ img, svg {
   font-size: 0.82rem;
   color: rgba(232, 216, 195, 0.75);
 }
+
+/* Page Hero */
+.page-hero {
+  background: linear-gradient(135deg, var(--espresso) 0%, var(--coffee) 100%);
+  color: var(--cream);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.page-hero h1 {
+  color: var(--cream);
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  margin-bottom: 0.65rem;
+}
+
+.page-hero-subtitle {
+  color: var(--beige);
+  font-size: 1.05rem;
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.catalog-helper {
+  text-align: center;
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0 auto 2.25rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.dropdown-menu a[aria-current="page"] {
+  background-color: rgba(198, 139, 89, 0.22);
+  color: var(--caramel);
+  font-weight: 600;
+}
