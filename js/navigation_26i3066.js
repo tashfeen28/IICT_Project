@@ -90,6 +90,7 @@
     var isMenuSection =
       currentPage === 'menu.html' ||
       currentPage === 'cold-coffee.html' ||
+      currentPage === 'signature-drinks.html' ||
       (document.body && document.body.dataset && Boolean(document.body.dataset.category));
 
     var navItems = [
@@ -382,6 +383,7 @@
       '          <li><a href="' + root + 'index.html">Home</a></li>' +
       '          <li><a href="' + root + 'pages/menu.html">Full Menu</a></li>' +
       '          <li><a href="' + root + 'pages/cold-coffee.html">Cold Coffee</a></li>' +
+      '          <li><a href="' + root + 'pages/signature-drinks.html">Signature Drinks</a></li>' +
       '          <li><a href="' + root + 'pages/loyalty.html">Loyalty Circle</a></li>' +
       '        </ul>' +
       '      </div>' +
