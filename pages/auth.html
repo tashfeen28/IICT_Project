@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in or create a Coffee Circle demo account to earn rewards.">
+  <title>Login &amp; Registration | The Coffee Circle</title>
+
+  <link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  >
+
+  <link rel="stylesheet" href="../css/style_i263068.css">
+  <link rel="stylesheet" href="../css/components_i263068.css">
+  <link rel="stylesheet" href="../css/responsive_i263068.css">
+
+  <style>
+    /* Auth page layout and form card matching the reference auth.html design */
+    .site-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-main > .section {
+      flex: 1 0 auto;
+    }
+
+    .auth-wrap {
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    .form-card {
+      background-color: var(--coffee-surface, #FFFFFF);
+      border: 1px solid var(--coffee-border, rgba(59, 36, 24, 0.14));
+      border-radius: var(--radius-md, 0.875rem);
+      padding: 2rem;
+      box-shadow: var(--shadow-md, 0 10px 26px rgba(38, 22, 14, 0.1));
+    }
+
+    /* Pill segmented tab strip */
+    .tabs {
+      display: flex;
+      background-color: var(--coffee-tan-deep, #E4D7C5);
+      border-radius: var(--radius-pill, 999px);
+      padding: 5px;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      padding: 0.68rem 1rem;
+      border-radius: var(--radius-pill, 999px);
+      font-family: var(--font-body, "Inter", sans-serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--coffee-muted, #5C473B);
+      cursor: pointer;
+      transition: background-color var(--transition-base, 0.25s ease), color var(--transition-base, 0.25s ease);
+    }
+
+    .tab:hover:not(.active) {
+      color: var(--coffee-dark, #3B2418);
+    }
+
+    .tab.active {
+      background-color: var(--coffee-dark, #3B2418);
+      color: var(--coffee-cream, #F5EBDD);
+    }
+
+    .tab:focus-visible {
+      outline: 2px solid var(--coffee-accent, #C68B59);
+      outline-offset: 2px;
+    }
+
+    /* Status banner */
+    .form-message {
+      margin: 0 0 1rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm, 0.5rem);
+    }
+
+    .form-message:empty {
+      display: none;
+    }
+
+    .form-message.error {
+      color: #a8321f;
+      background-color: #fbeae6;
+      padding: 0.75rem 1rem;
+    }
+
+    .form-message.success {
+      color: #2f6f3e;
+      background-color: #e8f2e5;
+      padding: 0.75rem 1rem;
+    }
+
+    .form-message.info {
+      color: var(--coffee-dark, #3B2418);
+      background-color: var(--coffee-tan-deep, #E4D7C5);
+      padding: 0.75rem 1rem;
+    }
+
+    .form-message a {
+      color: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--coffee-dark, #3B2418);
+    }
+
+    .field input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      font-family: var(--font-body, "Inter", sans-serif);
+      font-size: 0.95rem;
+      color: var(--coffee-text, #2C1E16);
+      background-color: var(--coffee-light, #FAF6F0);
+      border: 1.5px solid #d3bfa6;
+      border-radius: var(--radius-sm, 0.5rem);
+      transition: border-color var(--transition-base, 0.25s ease), box-shadow var(--transition-base, 0.25s ease);
+    }
+
+    .field input:focus {
+      outline: none;
+      border-color: var(--coffee-accent, #C68B59);
+      box-shadow: 0 0 0 3px rgba(198, 139, 89, 0.28);
+    }
+
+    .field input[aria-invalid="true"],
+    .field input.is-invalid {
+      border-color: #a8321f;
+    }
+
+    .field-hint {
+      display: block;
+      margin-top: 0.28rem;
+      font-size: 0.8rem;
+      color: var(--coffee-muted, #5C473B);
+      line-height: 1.4;
+    }
+
+    .field-error {
+      display: block;
+      min-height: 1.15em;
+      margin-top: 0.25rem;
+      font-size: 0.83rem;
+      color: #a8321f;
+    }
+
+    /* Submit & inline buttons */
+    .btn-block {
+      display: flex;
+      width: 100%;
+      margin-top: 0.5rem;
+      justify-content: center;
+    }
+
+    .btn-lg {
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    .form-card .btn-primary:active {
+      background-color: var(--coffee-roast, #2E1B11);
+      border-color: var(--coffee-roast, #2E1B11);
+      color: var(--coffee-cream, #F5EBDD);
+    }
+
+    .link-inline {
+      display: inline;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: transparent;
+      color: var(--coffee-accent-text, #7A4620);
+      font: inherit;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color var(--transition-base, 0.25s ease);
+    }
+
+    .link-inline:hover,
+    .link-inline:focus-visible {
+      color: var(--coffee-dark, #3B2418);
+      outline: none;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: var(--coffee-muted, #5C473B);
+    }
+
+    /* Demo credentials box inside .form-card */
+    .demo-box {
+      margin-top: 1.25rem;
+      padding: 0.9rem 1rem;
+      background-color: var(--coffee-cream, #F5EBDD);
+      border: 1px dashed var(--coffee-accent, #C68B59);
+      border-radius: var(--radius-sm, 0.5rem);
+      font-size: 0.88rem;
+      color: var(--coffee-text, #2C1E16);
+    }
+
+    .demo-box p {
+      margin: 0 0 0.4rem;
+    }
+
+    .demo-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-box code {
+      background-color: rgba(59, 36, 24, 0.08);
+      border: 1px solid rgba(59, 36, 24, 0.14);
+      border-radius: 0.3rem;
+      padding: 0.1rem 0.38rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--coffee-dark, #3B2418);
+    }
+
+    .muted {
+      color: var(--coffee-muted, #5C473B);
+      font-size: 0.82rem;
+    }
+
+    /* Scoped header styling on auth.html to match the reference Coffee Circle header */
+    #site-header .coffee-navbar {
+      background: var(--coffee-dark, #3B2418);
+      border-bottom: 0;
+      min-height: 72px;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    #site-header .brand-text {
+      font-size: 1.35rem;
+      color: var(--coffee-cream, #F5EBDD);
+    }
+
+    #site-header .coffee-navbar .navbar-nav {
+      gap: 0.35rem;
+    }
+
+    #site-header .coffee-navbar .nav-link {
+      color: var(--coffee-cream, #F5EBDD);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.5rem 0.82rem;
+      border-radius: 999px;
+    }
+
+    #site-header .coffee-navbar .nav-link:hover,
+    #site-header .coffee-navbar .nav-link:focus-visible,
+    #site-header .coffee-navbar .nav-link.show {
+      background-color: rgba(245, 235, 221, 0.14);
+      color: var(--coffee-cream, #F5EBDD);
+    }
+
+    #site-header .coffee-navbar .nav-link.active,
+    #site-header .coffee-navbar .nav-link[aria-current="page"] {
+      background-color: var(--coffee-accent, #C68B59);
+      color: var(--coffee-dark, #3B2418);
+      font-weight: 600;
+    }
+
+    #site-header .coffee-navbar .nav-link.active::after,
+    #site-header .coffee-navbar .nav-link[aria-current="page"]::after {
+      display: none;
+    }
+
+    #site-header .coffee-dropdown-menu {
+      background-color: var(--coffee-surface, #FFFFFF);
+      border: 1px solid rgba(59, 36, 24, 0.12);
+      border-radius: 14px;
+      padding: 0.5rem;
+      box-shadow: 0 18px 40px rgba(59, 36, 24, 0.2);
+    }
+
+    #site-header .coffee-dropdown-menu .dropdown-item {
+      color: var(--coffee-dark, #3B2418);
+      border-radius: 10px;
+      padding: 0.5rem 0.85rem;
+    }
+
+    #site-header .coffee-dropdown-menu .dropdown-item:hover,
+    #site-header .coffee-dropdown-menu .dropdown-item:focus-visible {
+      background-color: var(--coffee-cream, #F5EBDD);
+      color: var(--coffee-dark, #3B2418);
+    }
+
+    #site-header .coffee-navbar .nav-link.nav-cart-link {
+      padding: 0.5rem 0.72rem;
+      border-radius: 999px;
+      color: var(--coffee-cream, #F5EBDD);
+      margin-left: 0.1rem;
+    }
+
+    #site-header .coffee-navbar .nav-link.nav-cart-link:hover,
+    #site-header .coffee-navbar .nav-link.nav-cart-link:focus-visible {
+      background-color: rgba(245, 235, 221, 0.14);
+      color: var(--coffee-cream, #F5EBDD);
+    }
+
+    #site-header .nav-cart-badge[hidden] {
+      display: none !important;
+    }
+
+    #site-header .coffee-navbar .nav-cart-badge {
+      top: 2px;
+      right: 2px;
+      min-width: 1.15rem;
+      height: 1.15rem;
+      padding: 0 0.3rem;
+      background-color: var(--coffee-accent, #C68B59);
+      color: var(--coffee-dark, #3B2418);
+      font-size: 0.7rem;
+    }
+
+    #site-header .coffee-navbar .nav-auth-btn {
+      background: transparent;
+      border: 0;
+      text-align: left;
+    }
+
+    #site-header .coffee-navbar .muted-light {
+      opacity: 0.78;
+      font-weight: 400;
+    }
+
+    @media (max-width: 575.98px) {
+      .form-card {
+        padding: 1.35rem 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body data-root="../">
+  <a class="skip-link visually-hidden-focusable" href="#main">Skip to main content</a>
+
+  <div id="site-header"></div>
+
+  <main id="main" class="site-main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Join the Circle</p>
+        <h1>Login &amp; Registration</h1>
+        <p class="page-hero-subtitle">Log in to earn points, redeem free coffee and see your orders.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Login and registration">
+      <div class="container auth-wrap">
+        <div class="form-card">
+          <div class="tabs" role="tablist" aria-label="Login or register">
+            <button
+              type="button"
+              id="tab-login"
+              class="tab active"
+              role="tab"
+              data-tab="login"
+              aria-selected="true"
+              aria-controls="login-form"
+            >Login</button>
+            <button
+              type="button"
+              id="tab-register"
+              class="tab"
+              role="tab"
+              data-tab="register"
+              aria-selected="false"
+              aria-controls="register-form"
+              tabindex="-1"
+            >Register</button>
+          </div>
+
+          <p id="auth-status" class="form-message" role="status" aria-live="polite"></p>
+
+          <form id="login-form" role="tabpanel" aria-labelledby="tab-login" novalidate>
+            <div class="field">
+              <label for="l-id">Username or email</label>
+              <input id="l-id" name="identifier" type="text" autocomplete="username">
+              <span class="field-error" data-error-for="identifier" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="l-pass">Password</label>
+              <input id="l-pass" name="password" type="password" autocomplete="current-password">
+              <span class="field-error" data-error-for="password" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Log in</button>
+            <p class="center small" style="margin-top: 14px;">
+              New here?
+              <button type="button" class="link-inline" data-switch="register">Create an account</button>
+            </p>
+          </form>
+
+          <form id="register-form" role="tabpanel" aria-labelledby="tab-register" novalidate hidden>
+            <div class="field">
+              <label for="r-name">Full name</label>
+              <input id="r-name" name="fullName" type="text" autocomplete="name">
+              <span class="field-error" data-error-for="fullName" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="r-email">Email address</label>
+              <input id="r-email" name="email" type="email" autocomplete="email">
+              <span class="field-error" data-error-for="email" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="r-user">Username</label>
+              <input id="r-user" name="username" type="text" autocomplete="username" aria-describedby="r-user-hint">
+              <span id="r-user-hint" class="field-hint">3-20 characters: letters, numbers, underscore.</span>
+              <span class="field-error" data-error-for="username" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="r-pass">Password</label>
+              <input id="r-pass" name="password" type="password" autocomplete="new-password" aria-describedby="r-pass-hint">
+              <span id="r-pass-hint" class="field-hint">At least 6 characters. Use a throwaway demo password, never a real one.</span>
+              <span class="field-error" data-error-for="password" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="r-confirm">Confirm password</label>
+              <input id="r-confirm" name="confirm" type="password" autocomplete="new-password">
+              <span class="field-error" data-error-for="confirm" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Create account</button>
+            <p class="center small" style="margin-top: 14px;">
+              Already a member?
+              <button type="button" class="link-inline" data-switch="login">Log in</button>
+            </p>
+          </form>
+
+          <div class="demo-box">
+            <p>
+              <strong>Demo accounts</strong> (from <code>data/users.txt</code>):
+              <code>demo</code> / <code>demo123</code>
+              &nbsp;or&nbsp;
+              <code>tester</code> / <code>test1234</code>
+            </p>
+            <p id="storage-note" class="muted">
+              Demo only: passwords are stored as plain text and accounts live in this browser. Never use a real password.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+
+  <script src="../js/products_i263068.js"></script>
+  <script src="../js/index.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var USERS_KEY = 'cc_users';
+    var SESSION_KEY = 'cc_session';
+
+    var DEMO_ACCOUNTS = [
+      {
+        username: 'demo',
+        email: 'demo@coffeecircle.test',
+        password: 'demo123',
+        fullName: 'Demo Customer',
+        points: 150,
+        history: [{ type: 'bonus', points: 150, note: 'Demo starter balance', date: '2026-01-01T00:00:00.000Z' }],
+        redeemed: [],
+        joined: '2026-01-01T00:00:00.000Z',
+        source: 'users.txt'
+      },
+      {
+        username: 'tester',
+        email: 'tester@coffeecircle.test',
+        password: 'test1234',
+        fullName: 'Test Student',
+        points: 0,
+        history: [],
+        redeemed: [],
+        joined: '2026-01-01T00:00:00.000Z',
+        source: 'users.txt'
+      }
+    ];
+
+    function getRootPath() {
+      var rawRoot = (document.body && document.body.dataset && document.body.dataset.root) || '';
+      if (!rawRoot) return '';
+      return rawRoot.endsWith('/') ? rawRoot : rawRoot + '/';
+    }
+
+    function escapeHtml(text) {
+      var div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    }
+
+    function readJSON(key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        if (raw === null) return fallback;
+        var val = JSON.parse(raw);
+        return val === null ? fallback : val;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function writeJSON(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function isUserObject(u) {
+      return Boolean(
+        u &&
+        typeof u === 'object' &&
+        typeof u.username === 'string' && u.username.trim() !== '' &&
+        typeof u.email === 'string' && u.email.trim() !== '' &&
+        typeof u.password === 'string'
+      );
+    }
+
+    function normalizeUser(u) {
+      var points = Number(u.points);
+      return {
+        username: u.username.trim(),
+        email: u.email.trim().toLowerCase(),
+        password: u.password,
+        fullName: typeof u.fullName === 'string' && u.fullName.trim() ? u.fullName.trim() : u.username.trim(),
+        points: !isNaN(points) && points >= 0 ? points : 0,
+        history: Array.isArray(u.history) ? u.history : [],
+        redeemed: Array.isArray(u.redeemed) ? u.redeemed : [],
+        joined: typeof u.joined === 'string' && u.joined ? u.joined : new Date().toISOString(),
+        source: u.source || 'registered'
+      };
+    }
+
+    function cloneDemo(demo) {
+      return {
+        username: demo.username,
+        email: demo.email,
+        password: demo.password,
+        fullName: demo.fullName,
+        points: demo.points,
+        history: demo.history.slice(),
+        redeemed: demo.redeemed.slice(),
+        joined: demo.joined,
+        source: demo.source
+      };
+    }
+
+    function getUsers() {
+      var stored = readJSON(USERS_KEY, null);
+      if (!Array.isArray(stored)) {
+        stored = DEMO_ACCOUNTS.map(cloneDemo);
+        writeJSON(USERS_KEY, stored);
+        return stored;
+      }
+      var valid = stored.filter(isUserObject).map(normalizeUser);
+      var changed = false;
+      DEMO_ACCOUNTS.forEach(function (demo) {
+        var exists = valid.some(function (u) {
+          return u.username.toLowerCase() === demo.username.toLowerCase() ||
+            u.email.toLowerCase() === demo.email.toLowerCase();
+        });
+        if (!exists) {
+          valid.push(cloneDemo(demo));
+          changed = true;
+        }
+      });
+      if (changed) writeJSON(USERS_KEY, valid);
+      return valid;
+    }
+
+    function saveUsers(users) {
+      return writeJSON(USERS_KEY, users);
+    }
+
+    function parseUsersTxt(text) {
+      var users = [];
+      String(text || '').split(/\r?\n/).forEach(function (line) {
+        var trimmed = line.trim();
+        if (!trimmed || trimmed.charAt(0) === '#') return;
+        var parts = trimmed.split(',');
+        if (parts.length < 4) return;
+
+        var username = parts[0].trim();
+        var email = parts[1].trim().toLowerCase();
+        var password = parts[2].trim();
+        var fullName = parts[3].trim() || username;
+        var parsedPoints = parseInt(parts[4], 10);
+        var points = !isNaN(parsedPoints) && parsedPoints > 0 ? parsedPoints : 0;
+        if (!username || !email || !password) return;
+
+        var joined = new Date().toISOString();
+        var user = {
+          username: username,
+          email: email,
+          password: password,
+          fullName: fullName,
+          points: points,
+          history: [],
+          redeemed: [],
+          joined: joined,
+          source: 'users.txt'
+        };
+        if (points > 0) {
+          user.history.push({ type: 'bonus', points: points, note: 'Demo starter balance', date: joined });
+        }
+        users.push(user);
+      });
+      return users;
+    }
+
+    function syncUsersFromFile(root) {
+      if (location.protocol === 'file:' || typeof fetch !== 'function') {
+        return Promise.resolve(false);
+      }
+      return fetch(root + 'data/users.txt', { cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('not found');
+          return response.text();
+        })
+        .then(function (text) {
+          var users = getUsers();
+          var changed = false;
+          parseUsersTxt(text).forEach(function (fileUser) {
+            var known = users.some(function (u) {
+              return u.username.toLowerCase() === fileUser.username.toLowerCase() ||
+                u.email.toLowerCase() === fileUser.email.toLowerCase();
+            });
+            if (!known) {
+              users.push(fileUser);
+              changed = true;
+            }
+          });
+          if (changed) saveUsers(users);
+          return true;
+        })
+        .catch(function () { return false; });
+    }
+
+    function currentUser() {
+      var session = readJSON(SESSION_KEY, null);
+      var username = typeof session === 'string'
+        ? session
+        : (session && typeof session.username === 'string' ? session.username : '');
+      if (!username || !username.trim()) return null;
+      return getUsers().filter(function (u) {
+        return u.username.toLowerCase() === username.trim().toLowerCase();
+      })[0] || null;
+    }
+
+    function saveSession(user) {
+      return writeJSON(SESSION_KEY, user.username);
+    }
+
+    function logoutUser() {
+      try { localStorage.removeItem(SESSION_KEY); } catch (e) { /* ignore */ }
+    }
+
+    function getCartItemCount() {
+      var keys = ['coffee_circle_cart', 'cc_cart'];
+      for (var i = 0; i < keys.length; i++) {
+        var cart = readJSON(keys[i], null);
+        if (Array.isArray(cart) && cart.length > 0) {
+          return cart.reduce(function (sum, item) {
+            var qty = Number(item.qty || item.quantity || 1);
+            return sum + (isNaN(qty) || qty < 1 ? 1 : qty);
+          }, 0);
+        }
+      }
+      return 0;
+    }
+
+    function renderAuthNavSlot(root) {
+      var user = currentUser();
+      if (user) {
+        return '<button type="button" class="nav-link nav-auth-btn" id="logout-btn">' +
+          'Logout <span class="muted-light">(' + escapeHtml(user.username) + ')</span></button>';
+      }
+      return '<a class="nav-link active" href="' + root + 'pages/auth.html" aria-current="page">Login / Register</a>';
+    }
+
+    function refreshAuthNavSlot(root) {
+      if (typeof window.updateHeaderAuth === 'function') {
+        window.updateHeaderAuth();
+        return;
+      }
+      var slot = document.getElementById('auth-slot');
+      if (!slot) return;
+      slot.innerHTML = renderAuthNavSlot(root);
+      var logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          logoutUser();
+          refreshAuthNavSlot(root);
+          var statusEl = document.getElementById('auth-status');
+          if (statusEl) {
+            statusEl.textContent = 'You have been logged out.';
+            statusEl.className = 'form-message success';
+          }
+        });
+      }
+    }
+
+    function renderHeaderIfMissing(root) {
+      var headerHost = document.getElementById('site-header');
+      if (!headerHost || headerHost.children.length > 0 || typeof window.renderHeader === 'function') {
+        return;
+      }
+      var cartCount = getCartItemCount();
+
+      headerHost.innerHTML =
+        '<header class="site-header sticky-top" data-espresso-header="true">' +
+          '<nav class="navbar navbar-expand-lg navbar-dark coffee-navbar" aria-label="Primary navigation">' +
+            '<div class="container">' +
+              '<a class="navbar-brand d-flex align-items-center gap-2" href="' + root + 'index.html">' +
+                '<svg class="brand-logo" viewBox="0 0 64 64" width="38" height="38" fill="none" aria-hidden="true">' +
+                  '<circle cx="32" cy="32" r="30" fill="#C68B59" />' +
+                  '<circle cx="32" cy="32" r="24" fill="#3B2418" />' +
+                  '<path d="M21 27h18v10a9 9 0 0 1-18 0V27Z" fill="#F5EBDD" />' +
+                  '<path d="M39 29h3a4 4 0 0 1 0 8h-3" stroke="#F5EBDD" stroke-width="2.6" stroke-linecap="round" />' +
+                  '<path d="M26 22c0-2 1.5-3 1.5-4.5M32 22c0-2 1.5-3 1.5-4.5" stroke="#C68B59" stroke-width="2.2" stroke-linecap="round" />' +
+                '</svg>' +
+                '<span class="brand-text">The Coffee Circle</span>' +
+              '</a>' +
+
+              '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNavbar" aria-controls="primaryNavbar" aria-expanded="false" aria-label="Toggle navigation">' +
+                '<span class="navbar-toggler-icon"></span>' +
+              '</button>' +
+
+              '<div class="collapse navbar-collapse" id="primaryNavbar">' +
+                '<ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">' +
+                  '<li class="nav-item"><a class="nav-link" href="' + root + 'index.html">Home</a></li>' +
+                  '<li class="nav-item"><a class="nav-link" href="' + root + 'pages/about.html">About</a></li>' +
+                  '<li class="nav-item dropdown">' +
+                    '<a class="nav-link dropdown-toggle" href="' + root + 'pages/menu.html" id="navbarMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>' +
+                    '<ul class="dropdown-menu dropdown-menu-end coffee-dropdown-menu" aria-labelledby="navbarMenuDropdown">' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/menu.html">All Coffee</a></li>' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/cappuccino.html">Cappuccino</a></li>' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/espresso.html">Espresso</a></li>' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/latte.html">Latte</a></li>' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/cold-coffee.html">Cold Coffee</a></li>' +
+                      '<li><a class="dropdown-item" href="' + root + 'pages/signature.html">Signature Drinks</a></li>' +
+                    '</ul>' +
+                  '</li>' +
+                  '<li class="nav-item"><a class="nav-link" href="' + root + 'pages/loyalty.html">Loyalty Rewards</a></li>' +
+                  '<li class="nav-item"><a class="nav-link" href="' + root + 'pages/account.html">My Account</a></li>' +
+                  '<li class="nav-item" id="auth-slot">' + renderAuthNavSlot(root) + '</li>' +
+                  '<li class="nav-item">' +
+                    '<a class="nav-link nav-cart-link" href="' + root + 'pages/cart.html" aria-label="Shopping bag" title="View cart">' +
+                      '<svg class="nav-bag-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                        '<path d="M6 7h12l1 13H5L6 7z"/>' +
+                        '<path d="M9 7V5a3 3 0 0 1 6 0v2"/>' +
+                      '</svg>' +
+                      '<span class="cart-badge nav-cart-badge" id="nav-cart-count"' + (cartCount > 0 ? '' : ' hidden') + '>' + cartCount + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                '</ul>' +
+              '</div>' +
+            '</div>' +
+          '</nav>' +
+        '</header>';
+
+      bindHeaderEvents(headerHost, root);
+    }
+
+    function bindHeaderEvents(headerHost, root) {
+      var navbar = headerHost.querySelector('.coffee-navbar');
+      var toggler = headerHost.querySelector('.navbar-toggler');
+      var navCollapse = headerHost.querySelector('#primaryNavbar');
+      var dropdownToggle = headerHost.querySelector('#navbarMenuDropdown');
+      var dropdownMenu = headerHost.querySelector('.coffee-dropdown-menu');
+
+      function updateNavbarScrollState() {
+        if (navbar) {
+          navbar.classList.toggle('is-scrolled', window.scrollY > 16);
+        }
+      }
+
+      if (toggler && navCollapse && !(window.bootstrap && window.bootstrap.Collapse)) {
+        toggler.addEventListener('click', function () {
+          var isOpen = navCollapse.classList.toggle('show');
+          toggler.setAttribute('aria-expanded', String(isOpen));
+        });
+      }
+
+      if (dropdownToggle && dropdownMenu && !(window.bootstrap && window.bootstrap.Dropdown)) {
+        dropdownToggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          var isOpen = dropdownMenu.classList.toggle('show');
+          dropdownToggle.classList.toggle('show', isOpen);
+          dropdownToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest('[data-espresso-header="true"] .dropdown')) {
+            dropdownMenu.classList.remove('show');
+            dropdownToggle.classList.remove('show');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (navCollapse && navCollapse.classList.contains('show')) {
+          if (window.bootstrap && window.bootstrap.Collapse) {
+            window.bootstrap.Collapse.getOrCreateInstance(navCollapse).hide();
+          } else {
+            navCollapse.classList.remove('show');
+            if (toggler) toggler.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+
+      window.addEventListener('scroll', updateNavbarScrollState, { passive: true });
+      updateNavbarScrollState();
+      refreshAuthNavSlot(root);
+    }
+
+    function renderFooterIfMissing(root) {
+      var footerHost = document.getElementById('site-footer');
+      if (!footerHost || footerHost.children.length > 0 || typeof window.renderFooter === 'function') {
+        return;
+      }
+
+      footerHost.innerHTML =
+        '<footer class="site-footer">' +
+          '<div class="container">' +
+            '<div class="footer-grid">' +
+              '<div>' +
+                '<p class="footer-title">The Coffee Circle</p>' +
+                '<p class="footer-copy">Your Daily Dose of Comfort. Specialty coffee, made your way and brought to your door.</p>' +
+                '<div class="footer-social" aria-label="Social media">' +
+                  '<button type="button" class="footer-social-btn" aria-label="Instagram">IG</button>' +
+                  '<button type="button" class="footer-social-btn" aria-label="Facebook">FB</button>' +
+                  '<button type="button" class="footer-social-btn" aria-label="X">X</button>' +
+                '</div>' +
+              '</div>' +
+
+              '<nav aria-label="Quick Links">' +
+                '<h2 class="footer-heading">QUICK LINKS</h2>' +
+                '<ul class="footer-list">' +
+                  '<li><a href="' + root + 'index.html">Home</a></li>' +
+                  '<li><a href="' + root + 'pages/about.html">About Us</a></li>' +
+                  '<li><a href="' + root + 'pages/loyalty.html">Loyalty Rewards</a></li>' +
+                  '<li><a href="' + root + 'pages/account.html">My Account</a></li>' +
+                  '<li><a href="' + root + 'pages/cart.html">Your Cart</a></li>' +
+                '</ul>' +
+              '</nav>' +
+
+              '<nav aria-label="Our Menu">' +
+                '<h2 class="footer-heading">OUR MENU</h2>' +
+                '<ul class="footer-list">' +
+                  '<li><a href="' + root + 'pages/menu.html">All Coffee</a></li>' +
+                  '<li><a href="' + root + 'pages/cappuccino.html">Cappuccino</a></li>' +
+                  '<li><a href="' + root + 'pages/espresso.html">Espresso</a></li>' +
+                  '<li><a href="' + root + 'pages/latte.html">Latte</a></li>' +
+                  '<li><a href="' + root + 'pages/cold-coffee.html">Cold Coffee</a></li>' +
+                  '<li><a href="' + root + 'pages/signature.html">Signature Drinks</a></li>' +
+                '</ul>' +
+              '</nav>' +
+
+              '<div>' +
+                '<h2 class="footer-heading">CONTACT</h2>' +
+                '<ul class="footer-list">' +
+                  '<li class="footer-contact-item">Demo Street, Blue Area, Islamabad, Pakistan</li>' +
+                  '<li class="footer-contact-item"><a href="mailto:hello@coffeecircle.test">hello@coffeecircle.test</a></li>' +
+                  '<li class="footer-contact-item">Open daily 8:00 am &ndash; 11:00 pm</li>' +
+                '</ul>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="footer-bottom-legal">' +
+              '<p class="mb-0">&copy; 2026 The Coffee Circle. A university project for CL1000 (Fall 2026). Not a real business.</p>' +
+              '<p class="footer-disclosure">Note: Drink illustrations shown on pages are code-generated vector SVGs; no external AI image-generation tool was used.</p>' +
+            '</div>' +
+          '</div>' +
+        '</footer>';
+    }
+
+    /* Validation */
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    }
+
+    function isValidUsername(username) {
+      return /^[a-zA-Z0-9_]{3,20}$/.test(username);
+    }
+
+    function validateLogin(identifier, password) {
+      var errors = {};
+      if (!String(identifier || '').trim()) errors.identifier = 'Please enter your username or email.';
+      if (!String(password || '')) errors.password = 'Please enter your password.';
+      return errors;
+    }
+
+    function validateRegistration(data) {
+      var errors = {};
+      var users = getUsers();
+      var fullName = String(data.fullName || '').trim();
+      var email = String(data.email || '').trim();
+      var username = String(data.username || '').trim();
+      var password = String(data.password || '');
+      var confirm = String(data.confirm || '');
+
+      if (fullName.length < 2) {
+        errors.fullName = 'Please enter your full name (at least 2 characters).';
+      }
+
+      if (!email) {
+        errors.email = 'Please enter your email address.';
+      } else if (!isValidEmail(email)) {
+        errors.email = 'Please enter a valid email address, e.g. name@example.com.';
+      } else if (users.some(function (u) { return u.email.toLowerCase() === email.toLowerCase(); })) {
+        errors.email = 'An account with this email already exists. Try logging in.';
+      }
+
+      if (!username) {
+        errors.username = 'Please choose a username.';
+      } else if (!isValidUsername(username)) {
+        errors.username = 'Username must be 3-20 characters: letters, numbers, underscore.';
+      } else if (users.some(function (u) { return u.username.toLowerCase() === username.toLowerCase(); })) {
+        errors.username = 'That username is taken. Please choose another.';
+      }
+
+      if (!password || !password.trim()) {
+        errors.password = 'Password must be at least 6 characters and cannot be blank spaces.';
+      } else if (password.length < 6) {
+        errors.password = 'Password must be at least 6 characters.';
+      }
+
+      if (!confirm) {
+        errors.confirm = 'Please confirm your password.';
+      } else if (confirm !== password) {
+        errors.confirm = 'Passwords do not match.';
+      }
+
+      return errors;
+    }
+
+    function loginUser(identifier, password) {
+      var id = String(identifier || '').trim().toLowerCase();
+      if (!id || !password) {
+        return { ok: false, error: 'Please enter your username/email and password.' };
+      }
+      var user = getUsers().filter(function (u) {
+        return u.username.toLowerCase() === id || u.email.toLowerCase() === id;
+      })[0];
+      if (!user) return { ok: false, error: 'No account found with that username or email.' };
+      if (user.password !== password) return { ok: false, error: 'Incorrect password. Please try again.' };
+      if (!saveSession(user)) {
+        return { ok: false, error: 'Could not save your session (browser storage is blocked).' };
+      }
+      return { ok: true, user: user };
+    }
+
+    function registerUser(data) {
+      var users = getUsers();
+      var uClean = String(data.username || '').trim();
+      var eLow = String(data.email || '').trim().toLowerCase();
+      var taken = users.some(function (u) {
+        return u.username.toLowerCase() === uClean.toLowerCase() || u.email.toLowerCase() === eLow;
+      });
+      if (taken) return null;
+
+      var newUser = {
+        username: uClean,
+        email: eLow,
+        password: String(data.password || ''),
+        fullName: String(data.fullName || '').trim(),
+        points: 0,
+        history: [],
+        redeemed: [],
+        joined: new Date().toISOString(),
+        source: 'registered'
+      };
+      users.push(newUser);
+      if (!saveUsers(users) || !saveSession(newUser)) return null;
+      return newUser;
+    }
+
+    function showFormErrors(form, errors) {
+      form.querySelectorAll('[data-error-for]').forEach(function (el) {
+        var fieldName = el.dataset.errorFor;
+        var msg = errors[fieldName] || '';
+        el.textContent = msg;
+        var input = form.querySelector('[name="' + fieldName + '"]');
+        if (input) {
+          input.classList.toggle('is-invalid', Boolean(msg));
+          input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+        }
+      });
+      var firstBad = form.querySelector('[aria-invalid="true"]');
+      if (firstBad) firstBad.focus();
+    }
+
+    function clearFieldError(form, name) {
+      var errorEl = form.querySelector('[data-error-for="' + name + '"]');
+      var inputEl = form.querySelector('[name="' + name + '"]');
+      if (errorEl) errorEl.textContent = '';
+      if (inputEl) {
+        inputEl.classList.remove('is-invalid');
+        inputEl.setAttribute('aria-invalid', 'false');
+      }
+    }
+
+    function renderLoggedInStatus(statusEl, user, root) {
+      statusEl.textContent = '';
+      statusEl.className = 'form-message info';
+      statusEl.appendChild(document.createTextNode('You are logged in as ' + user.username + '. '));
+
+      var homeLink = document.createElement('a');
+      homeLink.href = root + 'index.html';
+      homeLink.textContent = 'Go to Home';
+      statusEl.appendChild(homeLink);
+      statusEl.appendChild(document.createTextNode(' or '));
+
+      var outBtn = document.createElement('button');
+      outBtn.type = 'button';
+      outBtn.className = 'link-inline';
+      outBtn.textContent = 'log out';
+      outBtn.addEventListener('click', function () {
+        logoutUser();
+        refreshAuthNavSlot(root);
+        statusEl.textContent = 'You have been logged out.';
+        statusEl.className = 'form-message success';
+      });
+      statusEl.appendChild(outBtn);
+      statusEl.appendChild(document.createTextNode('.'));
+    }
+
+    function safeRedirectUrl(root) {
+      var next = new URLSearchParams(location.search).get('next');
+      var allowed = {
+        'index.html': root + 'index.html',
+        'espresso.html': root + 'pages/espresso.html',
+        'account.html': root + 'pages/account.html',
+        'loyalty.html': root + 'pages/loyalty.html',
+        'checkout.html': root + 'pages/checkout.html',
+        'cart.html': root + 'pages/cart.html',
+        'menu.html': root + 'pages/menu.html'
+      };
+      return (next && allowed[next]) ? allowed[next] : (root + 'index.html');
+    }
+
+    function initAuthPage() {
+      var root = getRootPath();
+      renderHeaderIfMissing(root);
+      renderFooterIfMissing(root);
+
+      /* Skip inline auth setup only if standalone auth.js already initialized it */
+      if (typeof window.setupAuthPage === 'function') {
+        return;
+      }
+
+      var loginForm = document.getElementById('login-form');
+      var registerForm = document.getElementById('register-form');
+      if (!loginForm || !registerForm) return;
+
+      var statusEl = document.getElementById('auth-status');
+      var noteEl = document.getElementById('storage-note');
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+
+      function setStatus(msg, type) {
+        statusEl.textContent = msg;
+        statusEl.className = 'form-message' + (type ? ' ' + type : '');
+      }
+
+      function showTab(name, moveFocus) {
+        tabs.forEach(function (tab) {
+          var active = tab.dataset.tab === name;
+          tab.classList.toggle('active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+          tab.setAttribute('tabindex', active ? '0' : '-1');
+          if (active && moveFocus) tab.focus();
+        });
+        loginForm.hidden = name !== 'login';
+        registerForm.hidden = name !== 'register';
+        showFormErrors(loginForm, {});
+        showFormErrors(registerForm, {});
+
+        var user = currentUser();
+        if (user) {
+          renderLoggedInStatus(statusEl, user, root);
+        } else {
+          setStatus('', '');
+        }
+      }
+
+      tabs.forEach(function (tab, idx) {
+        tab.addEventListener('click', function () {
+          showTab(tab.dataset.tab, false);
+        });
+        tab.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            var nextIdx = e.key === 'ArrowRight'
+              ? (idx + 1) % tabs.length
+              : (idx - 1 + tabs.length) % tabs.length;
+            showTab(tabs[nextIdx].dataset.tab, true);
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-switch]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showTab(btn.dataset.switch, false);
+        });
+      });
+
+      [loginForm, registerForm].forEach(function (form) {
+        form.addEventListener('input', function (e) {
+          if (e.target && e.target.name) clearFieldError(form, e.target.name);
+        });
+      });
+
+      var mode = new URLSearchParams(location.search).get('mode');
+      showTab(mode === 'register' ? 'register' : 'login', false);
+
+      syncUsersFromFile(root).then(function (readFromFile) {
+        if (!noteEl) return;
+        noteEl.textContent = readFromFile
+          ? 'Demo mode: accounts were read from data/users.txt through your local server, and new accounts are saved in this browser (localStorage).'
+          : 'Demo only: passwords are stored as plain text and accounts live in this browser (localStorage). Never use a real password.';
+      });
+
+      loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var identifier = loginForm.elements.identifier.value;
+        var password = loginForm.elements.password.value;
+        var errors = validateLogin(identifier, password);
+        showFormErrors(loginForm, errors);
+        if (Object.keys(errors).length) {
+          setStatus('', '');
+          return;
+        }
+
+        var result = loginUser(identifier, password);
+        if (!result.ok) {
+          setStatus(result.error, 'error');
+          loginForm.elements.password.focus();
+          return;
+        }
+
+        refreshAuthNavSlot(root);
+        setStatus('Welcome back, ' + result.user.fullName + '! Redirecting\u2026', 'success');
+        setTimeout(function () {
+          location.href = safeRedirectUrl(root);
+        }, 900);
+      });
+
+      registerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var f = registerForm.elements;
+        var data = {
+          fullName: f.fullName.value,
+          email: f.email.value,
+          username: f.username.value,
+          password: f.password.value,
+          confirm: f.confirm.value
+        };
+        var errors = validateRegistration(data);
+        showFormErrors(registerForm, errors);
+        if (Object.keys(errors).length) {
+          setStatus('', '');
+          return;
+        }
+
+        var user = registerUser(data);
+        if (!user) {
+          setStatus('Could not create your account (duplicate details or browser storage is blocked).', 'error');
+          return;
+        }
+
+        refreshAuthNavSlot(root);
+        setStatus('Account created! Welcome to the Circle, ' + user.fullName + '.', 'success');
+        setTimeout(function () {
+          location.href = safeRedirectUrl(root);
+        }, 900);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAuthPage);
+    } else {
+      initAuthPage();
+    }
+  })();
+  </script>
+</body>
+</html>
