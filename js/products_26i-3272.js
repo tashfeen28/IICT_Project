@@ -189,28 +189,23 @@
 
     return `
       <svg viewBox="0 0 160 136" width="144" height="122" fill="none" role="img" aria-label="${altLabel}">
-        <!-- Steam lines -->
         <path d="M62 34c-3-6 3-10 0-16" stroke="${steamStroke}" stroke-width="2.4" stroke-linecap="round" opacity="0.85" />
         <path d="M80 31c-3-7 3-11 0-18" stroke="${steamStroke}" stroke-width="2.6" stroke-linecap="round" opacity="0.95" />
         <path d="M98 34c-3-6 3-10 0-16" stroke="${steamStroke}" stroke-width="2.4" stroke-linecap="round" opacity="0.85" />
 
-        <!-- Saucer shadow & porcelain saucer -->
         <ellipse cx="80" cy="111" rx="50" ry="10" fill="#3B2418" opacity="0.12" />
         <ellipse cx="80" cy="105" rx="48" ry="11" fill="#FFFFFF" stroke="#E0D2C2" stroke-width="1.5" />
         <ellipse cx="80" cy="103" rx="30" ry="6" fill="#EFE4D6" />
 
-        <!-- White porcelain cup body & handle -->
         <path d="M114 64h9a10 10 0 0 1 0 20h-11" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round" />
         <path d="M114 64h9a10 10 0 0 1 0 20h-11" stroke="#E0D2C2" stroke-width="1.5" stroke-linecap="round" />
         <path d="M44 54h72v18c0 18-16 31-36 31S44 90 44 72V54Z" fill="#FFFFFF" stroke="#E0D2C2" stroke-width="1.5" />
         <path d="M51 64c2 15 10 26 22 30" stroke="#F4ECE1" stroke-width="3" stroke-linecap="round" opacity="0.9" />
 
-        <!-- Espresso & velvety foam surface -->
         <ellipse cx="80" cy="54" rx="36" ry="11" fill="#FFFFFF" stroke="#E0D2C2" stroke-width="1.5" />
         <ellipse cx="80" cy="54" rx="31" ry="8.5" fill="${topFill}" />
         <ellipse cx="80" cy="53" rx="24" ry="6.2" fill="${v.foamColor}" />
 
-        <!-- Latte art / garnish -->
         <path d="M80 49c3.5 3.2 6.5 5 6.5 8a6.5 6.5 0 0 1-13 0c0-3 3-4.8 6.5-8Z" fill="${v.accentColor}" opacity="0.72" />
         ${v.iced ? '<rect x="68" y="49" width="7" height="7" rx="1.5" transform="rotate(-14 68 49)" fill="#FFFFFF" opacity="0.75" /><rect x="85" y="48" width="6.5" height="6.5" rx="1.5" transform="rotate(16 85 48)" fill="#FFFFFF" opacity="0.7" />' : ''}
       </svg>
@@ -837,16 +832,17 @@
       trigger.addEventListener('click', (e) => {
         if (window.innerWidth <= 992) {
           e.preventDefault();
-          const isOpen = dropdown.classList.toggle('open');
-          trigger.setAttribute('aria-expanded', String(isOpen));
+          dropdown.classList.toggle('open');
+          const expanded = dropdown.classList.contains('open');
+          trigger.setAttribute('aria-expanded', String(expanded));
         }
       });
     });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    initFallbackNavigation();
     renderCategoryGrid();
     updateCartUI();
+    initFallbackNavigation();
   });
 })();
