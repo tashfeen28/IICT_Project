@@ -6,8 +6,97 @@
 (function () {
   'use strict';
 
-  var CART_STORAGE_KEY = 'coffeeCircleCart';
+  var CART_STORAGE_KEY       = 'coffeeCircleCart';
+  var CART_KEY_CAPPUCCINO    = 'coffee_circle_cart';
+  var CART_KEY_LATTE         = 'cc_cart';
+  var ALL_CART_KEYS          = [CART_STORAGE_KEY, CART_KEY_CAPPUCCINO, CART_KEY_LATTE];
   var PROMO_STORAGE_KEY = 'coffeeCirclePromo';
+
+  /* -------------------------------------------------------------------------
+     cc_cart (i263069) stores only { id, size, addons:[], qty } — no name or
+     price.  To avoid loading products_i263069.js (which declares conflicting
+     globals like getCart, renderCartPage, updateCartBadge, etc.) we keep a
+     small read-only lookup of every product in that catalog.
+     Prices are the base prices from products_i263069.js (const PRODUCTS array).
+     Size deltas: standard Small→0, Medium→+60, Large→+120
+                  shot   Single→0, Double→+100
+                  single Regular→0
+                  premium Medium→0, Large→+100
+     Add-on prices: extra-shot→80, oat-milk→60, extra-syrup→40, whipped-cream→50
+  --------------------------------------------------------------------------- */
+  var CC_CART_PRODUCTS = {
+    'cap-classic':    { name: 'Classic Cappuccino',       base: 350, type: 'standard' },
+    'cap-vanilla':    { name: 'Vanilla Cappuccino',       base: 390, type: 'standard' },
+    'cap-caramel':    { name: 'Caramel Cappuccino',       base: 400, type: 'standard' },
+    'cap-hazelnut':   { name: 'Hazelnut Cappuccino',      base: 410, type: 'standard' },
+    'cap-chocolate':  { name: 'Chocolate Cappuccino',     base: 420, type: 'standard' },
+    'cap-iced':       { name: 'Iced Cappuccino',          base: 430, type: 'standard' },
+    'cap-cinnamon':   { name: 'Cinnamon Cappuccino',      base: 390, type: 'standard' },
+    'cap-almond':     { name: 'Almond Cappuccino',        base: 440, type: 'standard' },
+    'esp-classic':    { name: 'Classic Espresso',         base: 250, type: 'shot'     },
+    'esp-double':     { name: 'Double Espresso',          base: 350, type: 'single'   },
+    'esp-ristretto':  { name: 'Ristretto',                base: 300, type: 'single'   },
+    'esp-americano':  { name: 'Americano',                base: 320, type: 'standard' },
+    'esp-macchiato':  { name: 'Macchiato',                base: 340, type: 'single'   },
+    'esp-panna':      { name: 'Espresso Con Panna',       base: 400, type: 'single'   },
+    'lat-classic':    { name: 'Classic Latte',            base: 380, type: 'standard' },
+    'lat-vanilla':    { name: 'Vanilla Latte',            base: 420, type: 'standard' },
+    'lat-caramel':    { name: 'Caramel Latte',            base: 430, type: 'standard' },
+    'lat-hazelnut':   { name: 'Hazelnut Latte',           base: 440, type: 'standard' },
+    'lat-spanish':    { name: 'Spanish Latte',            base: 480, type: 'standard' },
+    'lat-iced':       { name: 'Iced Latte',               base: 450, type: 'standard' },
+    'lat-mocha':      { name: 'Mocha Latte',              base: 500, type: 'standard' },
+    'lat-cinnamon':   { name: 'Cinnamon Latte',           base: 420, type: 'standard' },
+    'cold-americano': { name: 'Iced Americano',           base: 400, type: 'standard' },
+    'cold-latte':     { name: 'Iced Latte',               base: 450, type: 'standard' },
+    'cold-mocha':     { name: 'Iced Mocha',               base: 520, type: 'standard' },
+    'cold-brew':      { name: 'Cold Brew',                base: 480, type: 'standard' },
+    'frappe-caramel': { name: 'Caramel Frappe',           base: 580, type: 'standard' },
+    'frappe-chocolate':{ name:'Chocolate Frappe',         base: 580, type: 'standard' },
+    'frappe-vanilla': { name: 'Vanilla Frappe',           base: 560, type: 'standard' },
+    'cold-spanish':   { name: 'Iced Spanish Latte',       base: 550, type: 'standard' },
+    'sig-special':    { name: 'Circle Special Mocha',     base: 650, type: 'premium'  },
+    'sig-golden':     { name: 'Golden Caramel Brew',      base: 620, type: 'premium'  },
+    'sig-midnight':   { name: 'Midnight Chocolate',       base: 680, type: 'premium'  },
+    'sig-royal':      { name: 'Royal Hazelnut Coffee',    base: 650, type: 'premium'  },
+    'sig-dream':      { name: 'Cinnamon Dream',           base: 600, type: 'premium'  },
+    'sig-brown':      { name: 'Brown Sugar Latte',        base: 560, type: 'premium'  }
+  };
+  var CC_CART_SIZE_DELTA = {
+    standard: { 'Small': 0, 'Medium': 60, 'Large': 120 },
+    shot:     { 'Single': 0, 'Double': 100 },
+    single:   { 'Regular': 0 },
+    premium:  { 'Medium': 0, 'Large': 100 }
+  };
+  var CC_CART_ADDON_PRICES = {
+    'extra-shot': 80, 'oat-milk': 60, 'extra-syrup': 40, 'whipped-cream': 50
+  };
+
+  /**
+   * Resolve display name and unit price from a raw cc_cart item.
+   * cc_cart stores { id, size, addons:[], qty }; prices come from our lookup.
+   */
+  function resolveCcCartItem(raw) {
+    var meta = CC_CART_PRODUCTS[raw.id];
+    var baseName = meta ? meta.name : String(raw.id || 'Coffee Drink');
+    if (raw.free === true) {
+      return { name: baseName + ' (Free Reward)', unitPrice: 0 };
+    }
+    if (!meta) {
+      return { name: baseName, unitPrice: 0 };
+    }
+    var sizeDeltas = CC_CART_SIZE_DELTA[meta.type] || {};
+    var delta = Number(sizeDeltas[raw.size] || 0);
+    var addonsTotal = Array.isArray(raw.addons)
+      ? raw.addons.reduce(function (sum, addonId) {
+          return sum + (CC_CART_ADDON_PRICES[addonId] || 0);
+        }, 0)
+      : 0;
+    return {
+      name: meta.name,
+      unitPrice: meta.base + delta + addonsTotal
+    };
+  }
   var PROMO_CODES = {
     COFFEE10: { code: 'COFFEE10', rate: 0.1, label: '10% Off' }
   };
@@ -69,11 +158,11 @@
   }
 
   /**
-   * Read and parse cart items safely from localStorage.
+   * Read items from ONE localStorage key safely.  Returns [] on any error.
    */
-  function readCartStorage() {
+  function readKey(key) {
     try {
-      var raw = window.localStorage.getItem(CART_STORAGE_KEY);
+      var raw = window.localStorage.getItem(key);
       if (!raw) return [];
       var parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed : [];
@@ -83,15 +172,82 @@
   }
 
   /**
-   * Persist cart items, refresh header badge, and broadcast cart:updated.
+   * Write items array back to ONE localStorage key.
    */
-  function saveCartStorage(items, detail) {
+  function writeKey(key, items) {
     try {
-      window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+      window.localStorage.setItem(key, JSON.stringify(items));
     } catch (err) {
       // Ignore storage quota or private-browsing errors.
     }
+  }
 
+  /**
+   * Read cart items from ALL three keys.
+   * Each returned item carries _srcKey and _srcIndex so mutations write back
+   * ONLY to that item's source key without touching the other keys or fields.
+   */
+  function readCartStorage() {
+    var all = [];
+
+    /* ── coffeeCircleCart ───────────────────────────────────────────────── */
+    readKey(CART_STORAGE_KEY).forEach(function (item, rawIdx) {
+      if (!item || !item.id) return;
+      var clone = Object.assign({}, item);
+      clone._srcKey = CART_STORAGE_KEY;
+      clone._srcIndex = rawIdx;
+      all.push(clone);
+    });
+
+    /* ── coffee_circle_cart (26i-3272 / i263070 pages) ──────────────────── */
+    readKey(CART_KEY_CAPPUCCINO).forEach(function (item, rawIdx) {
+      if (!item || !item.id) return;
+      var clone = Object.assign({}, item);
+      clone._srcKey = CART_KEY_CAPPUCCINO;
+      clone._srcIndex = rawIdx;
+      all.push(clone);
+    });
+
+    /* ── cc_cart (i263069 — latte/espresso/etc.) ────────────────────────── */
+    readKey(CART_KEY_LATTE).forEach(function (raw, rawIdx) {
+      if (!raw || !raw.id) return;
+      var resolved = resolveCcCartItem(raw);
+      var sizeLabel = String(raw.size || '');
+      var addonList = Array.isArray(raw.addons)
+        ? raw.addons.map(function (addonId) {
+            return {
+              id: String(addonId),
+              label: String(addonId),
+              price: raw.free === true ? 0 : Number(CC_CART_ADDON_PRICES[addonId] || 0)
+            };
+          })
+        : [];
+      all.push({
+        _srcKey   : CART_KEY_LATTE,
+        _srcIndex : rawIdx,
+        _ccKey    : String(raw.key || ''),
+        id        : String(raw.id),
+        name      : resolved.name,
+        category  : '',
+        image     : '',
+        basePrice : resolved.unitPrice,
+        size      : sizeLabel,
+        sizeDelta : 0,
+        extras    : addonList,
+        unitPrice : resolved.unitPrice,
+        price     : resolved.unitPrice,
+        free      : raw.free === true,
+        quantity  : Number(raw.qty) >= 1 ? Math.floor(Number(raw.qty)) : 1
+      });
+    });
+
+    return all;
+  }
+
+  /**
+   * Broadcast cart:updated and refresh the navigation badge.
+   */
+  function notifyCartUpdated(items, detail) {
     if (typeof window.updateCartBadge === 'function') {
       window.updateCartBadge();
     }
@@ -104,6 +260,50 @@
     };
 
     window.dispatchEvent(new CustomEvent('cart:updated', { detail: payload }));
+  }
+
+  /**
+   * Surgically update or remove a single item in its own SOURCE localStorage key.
+   * Leaves the other keys and all unrelated fields on the item untouched.
+   */
+  function mutateSourceKeyItem(targetItem, nextQuantity) {
+    if (!targetItem || !targetItem._srcKey) return readCartStorage();
+
+    var srcKey = targetItem._srcKey;
+    var rawList = readKey(srcKey);
+    var sIdx = typeof targetItem._srcIndex === 'number' ? targetItem._srcIndex : -1;
+
+    if (sIdx < 0 || sIdx >= rawList.length || !rawList[sIdx]) {
+      return readCartStorage();
+    }
+
+    var shouldRemove = nextQuantity == null || !Number.isFinite(nextQuantity) || nextQuantity <= 0;
+    var detail = null;
+
+    if (shouldRemove) {
+      detail = rawList.splice(sIdx, 1)[0];
+    } else {
+      var entry = rawList[sIdx];
+      var cleanQty = Math.floor(nextQuantity);
+      if (srcKey === CART_STORAGE_KEY) {
+        entry.quantity = cleanQty;
+      } else {
+        // Teammate keys (coffee_circle_cart & cc_cart) use qty
+        if ('qty' in entry || srcKey !== CART_STORAGE_KEY) {
+          entry.qty = cleanQty;
+        }
+        if ('quantity' in entry) {
+          entry.quantity = cleanQty;
+        }
+      }
+      detail = entry;
+    }
+
+    writeKey(srcKey, rawList);
+
+    var updated = readCartStorage();
+    notifyCartUpdated(updated, detail);
+    return updated;
   }
 
   /**
@@ -131,18 +331,21 @@
    * Normalize a cart item object before saving or rendering.
    */
   function normalizeCartItem(item) {
-    var extras = Array.isArray(item && item.extras)
-      ? item.extras.map(function (extra) {
-          if (extra && typeof extra === 'object') {
-            return {
-              id: String(extra.id || extra.label || '').trim(),
-              label: String(extra.label || extra.id || '').trim(),
-              price: Number(extra.price || 0)
-            };
-          }
-          return { id: String(extra), label: String(extra), price: 0 };
-        })
-      : [];
+    var rawExtras = Array.isArray(item && item.extras)
+      ? item.extras
+      : Array.isArray(item && item.addons)
+        ? item.addons
+        : [];
+    var extras = rawExtras.map(function (extra) {
+      if (extra && typeof extra === 'object') {
+        return {
+          id: String(extra.id || extra.label || '').trim(),
+          label: String(extra.label || extra.id || '').trim(),
+          price: Number(extra.price || 0)
+        };
+      }
+      return { id: String(extra), label: String(extra), price: 0 };
+    });
 
     var unitPrice = Number(
       item && item.unitPrice != null
@@ -157,19 +360,21 @@
     var qty = Number(item && (item.quantity != null ? item.quantity : item.qty));
     if (!Number.isFinite(qty) || qty < 1) qty = 1;
 
+    var size = item && item.size != null ? String(item.size) : '';
+
     return {
       id: String((item && item.id) || ''),
       name: String((item && item.name) || 'Coffee Drink'),
       category: String((item && item.category) || ''),
       image: String((item && item.image) || ''),
       basePrice: Number((item && item.basePrice) || unitPrice),
-      size: String((item && item.size) || 'Small'),
+      size: size,
       sizeDelta: Number((item && item.sizeDelta) || 0),
       extras: extras,
       unitPrice: unitPrice,
       price: unitPrice,
       quantity: Math.floor(qty),
-      cartKey: buildItemSignature({ id: item && item.id, size: item && item.size, extras: extras })
+      cartKey: buildItemSignature({ id: item && item.id, size: size || 'Small', extras: extras })
     };
   }
 
@@ -229,8 +434,10 @@
     addItem: function (item) {
       if (!item || !item.id) return this.getItems();
 
-      var items = readCartStorage();
+      /* addItem always writes to our own key (coffeeCircleCart) */
+      var items = readKey(CART_STORAGE_KEY);
       var normalized = normalizeCartItem(item);
+      normalized._srcKey = CART_STORAGE_KEY;
       var signature = normalized.cartKey;
 
       var existingIndex = -1;
@@ -249,8 +456,15 @@
         items.push(normalized);
       }
 
-      saveCartStorage(items, normalized);
-      return items;
+      writeKey(CART_STORAGE_KEY, items.map(function (it) {
+        var out = {};
+        Object.keys(it).forEach(function (k) { if (k !== '_srcKey' && k !== '_srcIndex' && k !== '_ccKey') out[k] = it[k]; });
+        return out;
+      }));
+
+      var updated = readCartStorage();
+      notifyCartUpdated(updated, normalized);
+      return updated;
     },
 
     updateQuantity: function (indexOrKey, quantity) {
@@ -258,15 +472,7 @@
       var idx = resolveItemIndex(items, indexOrKey);
       if (idx === -1) return items;
 
-      var nextQty = Math.floor(Number(quantity));
-      if (!Number.isFinite(nextQty) || nextQty <= 0) {
-        items.splice(idx, 1);
-      } else {
-        items[idx].quantity = nextQty;
-      }
-
-      saveCartStorage(items);
-      return items;
+      return mutateSourceKeyItem(items[idx], Number(quantity));
     },
 
     removeItem: function (indexOrKey) {
@@ -274,14 +480,17 @@
       var idx = resolveItemIndex(items, indexOrKey);
       if (idx === -1) return items;
 
-      var removed = items.splice(idx, 1)[0];
-      saveCartStorage(items, removed);
-      return items;
+      return mutateSourceKeyItem(items[idx], null);
     },
 
     clearCart: function () {
-      var empty = [];
-      saveCartStorage(empty);
+      ALL_CART_KEYS.forEach(function (k) {
+        if (window.localStorage.getItem(k) !== null) {
+          writeKey(k, []);
+        }
+      });
+      var empty = readCartStorage();
+      notifyCartUpdated(empty, null);
       return empty;
     }
   };
@@ -466,10 +675,21 @@
       .map(function (rawItem, index) {
         var normalized = normalizeCartItem(rawItem);
         var catalogMatch = findCatalogProduct(normalized.id);
+        var isFree = Boolean(rawItem && (rawItem.free || rawItem.isReward));
         var drinkName = normalized.name || (catalogMatch && catalogMatch.name) || 'Coffee Drink';
-        var unitPrice = normalized.unitPrice || (catalogMatch && catalogMatch.basePrice) || 0;
+        var unitPrice = isFree
+          ? 0
+          : (normalized.unitPrice > 0
+              ? normalized.unitPrice
+              : (catalogMatch && catalogMatch.basePrice) || 0);
         var qty = normalized.quantity;
         var lineTotal = unitPrice * qty;
+
+        var sizeMetaMarkup = normalized.size
+          ? '    <div class="cart-item-meta">' +
+            '      <span class="cart-meta-pill">Size: ' + escapeHtml(normalized.size) + '</span>' +
+            '    </div>'
+          : '';
 
         var extrasMarkup = normalized.extras.length
           ? normalized.extras
@@ -490,9 +710,7 @@
           '      <h2 class="cart-item-title">' + escapeHtml(drinkName) + '</h2>' +
           '      <span class="cart-item-line-total">' + escapeHtml(formatPKR(lineTotal)) + '</span>' +
           '    </div>' +
-          '    <div class="cart-item-meta">' +
-          '      <span class="cart-meta-pill">Size: ' + escapeHtml(normalized.size) + '</span>' +
-          '    </div>' +
+          sizeMetaMarkup +
           '    <div class="cart-item-extras">' +
           '      <span>Extras:</span> ' +
           extrasMarkup +
@@ -866,7 +1084,7 @@
     }
 
     window.addEventListener('storage', function (event) {
-      if (!event || !event.key || event.key === CART_STORAGE_KEY) {
+      if (!event || !event.key || ALL_CART_KEYS.indexOf(event.key) !== -1) {
         renderCartPage();
       }
     });

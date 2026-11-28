@@ -41,32 +41,32 @@
       if (!Number.isNaN(globalCount)) return Math.max(0, globalCount);
     }
 
-    var storageKeys = ['coffeeCircleCart', 'coffee_circle_cart', 'tcc_cart', 'cart'];
+    var storageKeys = ['coffeeCircleCart', 'coffee_circle_cart', 'cc_cart', 'tcc_cart', 'cart'];
+    var total = 0;
     for (var i = 0; i < storageKeys.length; i += 1) {
       try {
         var raw = window.localStorage.getItem(storageKeys[i]);
         if (!raw) continue;
         var parsed = JSON.parse(raw);
 
+        var items = null;
         if (Array.isArray(parsed)) {
-          return parsed.reduce(function (total, item) {
-            var qty = item && (item.quantity || item.qty || 1);
-            return total + (Number(qty) > 0 ? Number(qty) : 1);
-          }, 0);
+          items = parsed;
+        } else if (parsed && Array.isArray(parsed.items)) {
+          items = parsed.items;
         }
 
-        if (parsed && Array.isArray(parsed.items)) {
-          return parsed.items.reduce(function (total, item) {
+        if (items) {
+          total += items.reduce(function (acc, item) {
             var qty = item && (item.quantity || item.qty || 1);
-            return total + (Number(qty) > 0 ? Number(qty) : 1);
+            return acc + (Number(qty) > 0 ? Number(qty) : 1);
           }, 0);
         }
       } catch (err) {
-        // Ignore malformed storage values and check fallback keys.
+        // Ignore malformed storage values.
       }
     }
-
-    return 0;
+    return total;
   }
 
   /**
