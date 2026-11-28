@@ -244,3 +244,48 @@
     width: 100%;
   }
 }
+
+/* ── Menu page responsive tweaks ───────────────────────────────────── */
+
+@media (max-width: 991.98px) {
+  .menu-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .menu-search-input {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .menu-sort-select {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .chips {
+    gap: 0.4rem;
+  }
+
+  .chip {
+    font-size: 0.78rem;
+    padding: 0.26rem 0.75rem;
+  }
+
+  .empty-state {
+    padding: 2.5rem 1rem;
+  }
+
+  .empty-state-heading {
+    font-size: 1.1rem;
+  }
+}
