@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Complete Menu &mdash; The Coffee Circle</title>
+  <meta name="description" content="Browse, search, filter and sort the full Coffee Circle menu. Find espresso, cappuccino, latte, cold coffee, and signature drinks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style_i263068.css">
+  <link rel="stylesheet" href="../css/components_i263068.css">
+  <link rel="stylesheet" href="../css/responsive_i263068.css">
+</head>
+<body data-root="../">
+
+  <!-- Skip link for keyboard/screen-reader users -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Header – populated by products_i263068.js via initEspressoHeader() -->
+  <div id="site-header"></div>
+
+  <!-- ============================================================
+       MAIN CONTENT
+  ============================================================ -->
+  <main id="main" tabindex="-1">
+
+    <!-- ── Hero ─────────────────────────────────────────────── -->
+    <section class="page-hero" aria-labelledby="menu-page-title">
+      <div class="container">
+        <p class="eyebrow">The full menu</p>
+        <h1 id="menu-page-title">Our Complete Menu</h1>
+        <p class="page-hero-subtitle">Search, filter and sort to find your perfect cup.</p>
+      </div>
+    </section>
+
+    <!-- ── Menu section ──────────────────────────────────────── -->
+    <section class="section" aria-label="Menu listing">
+      <div class="container">
+
+        <!-- Controls row: search + sort -->
+        <div class="menu-controls">
+
+          <!-- Search box -->
+          <div class="menu-control-group">
+            <label class="menu-label" for="menu-search">Search by name</label>
+            <div class="menu-search-wrap">
+              <svg class="menu-search-icon" viewBox="0 0 20 20" width="16" height="16"
+                   fill="none" stroke="currentColor" stroke-width="1.9"
+                   stroke-linecap="round" aria-hidden="true">
+                <circle cx="8.5" cy="8.5" r="5.5"/>
+                <path d="M13 13l3.5 3.5"/>
+              </svg>
+              <input
+                type="search"
+                id="menu-search"
+                class="menu-search-input"
+                placeholder="e.g. caramel, mocha, cold brew"
+                autocomplete="off"
+                spellcheck="false"
+              >
+            </div>
+          </div>
+
+          <!-- Sort selector -->
+          <div class="menu-control-group">
+            <label class="menu-label" for="menu-sort">Sort by price</label>
+            <select id="menu-sort" class="menu-sort-select">
+              <option value="default">Featured order</option>
+              <option value="low">Price: low to high</option>
+              <option value="high">Price: high to low</option>
+            </select>
+          </div>
+
+        </div><!-- /.menu-controls -->
+
+        <!-- Filter chips + result count toolbar -->
+        <div class="toolbar">
+          <div
+            class="chips"
+            id="menu-filters"
+            role="group"
+            aria-label="Filter by category"
+          ></div>
+          <p class="muted" id="menu-count" role="status"></p>
+        </div>
+
+        <!-- Accessible live region for cart feedback -->
+        <p class="visually-hidden" aria-live="polite" id="menu-live-region"></p>
+
+        <!-- Product grid – rendered by menu_i263068.js -->
+        <div class="product-grid" id="menu-grid" aria-live="polite" aria-label="Menu products"></div>
+
+        <!-- Empty state – shown when no items match -->
+        <div class="empty-state" id="menu-empty" hidden>
+          <div class="empty-state-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56" fill="none"
+                 stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <circle cx="28" cy="28" r="17"/>
+              <path d="M41 41l11 11"/>
+              <path d="M22 28h12M28 22v12"/>
+            </svg>
+          </div>
+          <h2 class="empty-state-heading">No drinks match your search</h2>
+          <p class="empty-state-msg">
+            Try a different word, such as &ldquo;latte&rdquo; or &ldquo;mocha&rdquo;, or clear your filters.
+          </p>
+          <button type="button" class="btn btn-primary" id="menu-reset">Clear filters</button>
+        </div>
+
+      </div><!-- /.container -->
+    </section>
+
+  </main>
+
+  <!-- Footer – populated by products_i263068.js via initEspressoFooter() -->
+  <div id="site-footer"></div>
+
+  <!-- Menu JS (must come after the DOM; products_i263068.js is loaded inside menu_i263068.js) -->
+  <script src="../js/products_i263068.js"></script>
+  <script src="../js/menu_i263068.js"></script>
+</body>
+</html>

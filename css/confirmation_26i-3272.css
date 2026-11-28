@@ -1,0 +1,636 @@
+/* =============================================================
+   confirmation_26i-3272.css — The Coffee Circle · Order Confirmation
+   Owner  : 26i-3272
+   Scope  : Scoped with .cf- and #confirmation-root to prevent conflicts.
+   Palette: Warm cream canvas (#f5efe4), dark espresso nav/buttons (#23150c),
+            solid forest-green checkmark (#3a7d44), soft tan pills (#e8dcc8).
+   ============================================================= */
+
+:root {
+  /* Canvas & Base Palette */
+  --cf-canvas        : #f5efe4;
+  --cf-card-bg       : #ffffff;
+  --cf-espresso      : #23150c;
+  --cf-espresso-dark : #160c07;
+  --cf-espresso-hover: #382215;
+  --cf-text          : #1f1610;
+  --cf-text-muted    : #75685d;
+  --cf-micro-label   : #8a7b6f;
+  
+  /* Brand & Accents */
+  --cf-green-check   : #3a7d44;
+  --cf-pill-bg       : #e8dcc8;
+  --cf-pill-border   : #d8c6af;
+  --cf-pill-text     : #3d2516;
+  --cf-card-border   : #e6ded4;
+  --cf-divider       : #f0e8de;
+  --cf-discount-txt  : #2e7d32;
+
+  /* Typography */
+  --cf-font-serif    : 'Playfair Display', Georgia, serif;
+  --cf-font-sans     : 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --cf-font-mono     : 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  /* Sizing & Radius */
+  --cf-radius-sm     : 8px;
+  --cf-radius-md     : 12px;
+  --cf-radius-lg     : 16px;
+  --cf-radius-pill   : 9999px;
+  --cf-max-w         : 980px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   1 · BASE RESET & PAGE CANVAS
+   ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.cf-body {
+  font-family: var(--cf-font-sans);
+  background-color: var(--cf-canvas);
+  color: var(--cf-text);
+  line-height: 1.55;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cf-container {
+  width: 100%;
+  max-width: var(--cf-max-w);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2 · DARK ESPRESSO NAVIGATION BAR
+   ───────────────────────────────────────────────────────────── */
+.cf-nav {
+  background-color: var(--cf-espresso);
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 10px rgba(22, 12, 7, 0.18);
+}
+
+.cf-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  gap: 1rem;
+}
+
+.cf-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--cf-font-serif);
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.cf-nav__brand:hover {
+  color: #f7eedf;
+}
+
+.cf-nav__brand-icon {
+  font-size: 1.4rem;
+}
+
+.cf-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cf-nav__link {
+  color: #e6ded3;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--cf-radius-sm);
+  transition: all 160ms ease;
+  white-space: nowrap;
+}
+
+.cf-nav__link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cf-nav__link--active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.14);
+  font-weight: 600;
+}
+
+.cf-nav__cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--cf-radius-pill);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background-color 160ms ease;
+  margin-left: 0.25rem;
+}
+
+.cf-nav__cart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cf-nav__cart-badge {
+  background-color: var(--cf-green-check);
+  color: #ffffff;
+  font-size: 0.75rem;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3 · HERO / CONFIRMATION HEADER
+   ───────────────────────────────────────────────────────────── */
+.cf-main {
+  flex: 1;
+  padding: 2.75rem 0 4rem;
+}
+
+.cf-hero-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Solid forest-green circular checkmark badge (#3a7d44) */
+.cf-check-badge {
+  width: 68px;
+  height: 68px;
+  background-color: var(--cf-green-check);
+  color: #ffffff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.15rem;
+  box-shadow: 0 4px 14px rgba(58, 125, 68, 0.32);
+}
+
+.cf-check-badge svg {
+  width: 34px;
+  height: 34px;
+  stroke: #ffffff;
+  stroke-width: 3.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Bold serif confirmation heading */
+.cf-confirm-title {
+  font-family: var(--cf-font-serif);
+  font-size: clamp(1.8rem, 3.8vw, 2.45rem);
+  font-weight: 700;
+  color: var(--cf-espresso);
+  line-height: 1.25;
+  margin-bottom: 0.65rem;
+}
+
+/* Order number row with soft tan pill badge */
+.cf-order-num-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.96rem;
+  color: var(--cf-text-muted);
+  font-weight: 500;
+}
+
+.cf-order-pill {
+  background-color: var(--cf-pill-bg);
+  border: 1px solid var(--cf-pill-border);
+  color: var(--cf-pill-text);
+  font-family: var(--cf-font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.28rem 0.95rem;
+  border-radius: var(--cf-radius-pill);
+  letter-spacing: 0.03em;
+  display: inline-block;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4 · TWO-COLUMN CARD GRID
+   ───────────────────────────────────────────────────────────── */
+.cf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+
+.cf-card {
+  background-color: var(--cf-card-bg);
+  border-radius: var(--cf-radius-lg);
+  border: 1px solid var(--cf-card-border);
+  box-shadow: 0 4px 18px rgba(35, 21, 12, 0.05);
+  padding: 1.85rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cf-card__title {
+  font-family: var(--cf-font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--cf-espresso);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1.5px solid var(--cf-divider);
+}
+
+/* ── Left Card: Your Drinks ── */
+.cf-drinks-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cf-drink-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--cf-divider);
+}
+
+.cf-drink-row:first-child {
+  padding-top: 0.2rem;
+}
+
+.cf-drink-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cf-drink-name {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--cf-text);
+}
+
+.cf-drink-customs {
+  font-size: 0.84rem;
+  color: var(--cf-text-muted);
+  line-height: 1.4;
+}
+
+.cf-drink-price {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--cf-espresso);
+  white-space: nowrap;
+}
+
+/* Totals section in left card */
+.cf-totals-list {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cf-total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.94rem;
+  color: var(--cf-text-muted);
+}
+
+.cf-total-line strong {
+  color: var(--cf-text);
+  font-weight: 600;
+}
+
+.cf-total-line--discount {
+  color: var(--cf-discount-txt);
+  font-weight: 600;
+}
+
+.cf-total-divider {
+  height: 1px;
+  background-color: var(--cf-divider);
+  margin: 0.4rem 0;
+}
+
+.cf-total-line--grand {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--cf-espresso);
+  padding-top: 0.25rem;
+}
+
+.cf-total-line--grand .cf-grand-val {
+  font-size: 1.3rem;
+  color: var(--cf-espresso);
+}
+
+/* ── Right Card: Order Details ── */
+.cf-details-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cf-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Clean uppercase micro-labels */
+.cf-micro-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cf-micro-label);
+}
+
+.cf-detail-val {
+  font-size: 0.96rem;
+  color: var(--cf-text);
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.cf-detail-val--strong {
+  font-weight: 600;
+  color: var(--cf-espresso);
+}
+
+.cf-detail-sub {
+  font-size: 0.85rem;
+  color: var(--cf-text-muted);
+}
+
+/* Dark espresso loyalty banner near bottom of right card */
+.cf-loyalty-banner {
+  background-color: var(--cf-espresso);
+  color: #f5efe4;
+  border-radius: var(--cf-radius-md);
+  padding: 1rem 1.15rem;
+  margin-top: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 12px rgba(35, 21, 12, 0.12);
+}
+
+.cf-loyalty-banner__icon {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.cf-loyalty-banner__text {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #f7eedf;
+  font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5 · CENTERED ACTION BUTTONS
+   ───────────────────────────────────────────────────────────── */
+.cf-actions-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.cf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cf-font-sans);
+  font-size: 0.96rem;
+  font-weight: 600;
+  padding: 0.85rem 1.95rem;
+  border-radius: var(--cf-radius-pill);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 180ms ease;
+  white-space: nowrap;
+}
+
+/* Primary dark espresso button */
+.cf-btn--primary {
+  background-color: var(--cf-espresso);
+  color: #ffffff;
+  border: 1.5px solid var(--cf-espresso);
+  box-shadow: 0 3px 10px rgba(35, 21, 12, 0.18);
+}
+
+.cf-btn--primary:hover {
+  background-color: var(--cf-espresso-hover);
+  border-color: var(--cf-espresso-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(35, 21, 12, 0.24);
+}
+
+/* Secondary outlined light button */
+.cf-btn--secondary {
+  background-color: transparent;
+  color: var(--cf-espresso);
+  border: 1.5px solid var(--cf-espresso);
+}
+
+.cf-btn--secondary:hover {
+  background-color: #ebdcc8;
+  color: var(--cf-espresso);
+  border-color: var(--cf-espresso);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6 · CLEAN FALLBACK EMPTY STATE
+   ───────────────────────────────────────────────────────────── */
+.cf-empty-card {
+  background-color: var(--cf-card-bg);
+  border-radius: var(--cf-radius-lg);
+  border: 1px solid var(--cf-card-border);
+  box-shadow: 0 4px 18px rgba(35, 21, 12, 0.05);
+  padding: 3.5rem 2rem;
+  text-align: center;
+  max-width: 580px;
+  margin: 1.5rem auto 0;
+}
+
+.cf-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.1rem;
+  display: block;
+}
+
+.cf-empty-title {
+  font-family: var(--cf-font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--cf-espresso);
+  margin-bottom: 0.65rem;
+}
+
+.cf-empty-desc {
+  font-size: 0.98rem;
+  color: var(--cf-text-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7 · FOOTER
+   ───────────────────────────────────────────────────────────── */
+.cf-footer {
+  margin-top: auto;
+  background-color: #ede3d2;
+  border-top: 1px solid #dfd3c0;
+  padding: 1.75rem 0;
+  color: var(--cf-text-muted);
+  font-size: 0.88rem;
+}
+
+.cf-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cf-footer__brand {
+  font-family: var(--cf-font-serif);
+  font-weight: 600;
+  color: var(--cf-espresso);
+}
+
+.cf-footer__links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.cf-footer__link {
+  color: var(--cf-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cf-footer__link:hover {
+  color: var(--cf-espresso);
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8 · RESPONSIVE RULES
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cf-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .cf-card {
+    padding: 1.4rem;
+  }
+
+  .cf-nav__inner {
+    flex-direction: column;
+    padding: 0.75rem 0;
+    gap: 0.6rem;
+  }
+
+  .cf-nav__links {
+    justify-content: center;
+  }
+
+  .cf-actions-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cf-btn {
+    width: 100%;
+  }
+
+  .cf-footer__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9 · PRINT STYLESHEET
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  body.cf-body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .cf-nav,
+  .cf-footer,
+  .cf-actions-wrap,
+  .no-print {
+    display: none !important;
+  }
+
+  .cf-main {
+    padding: 0 !important;
+  }
+
+  .cf-card {
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .cf-loyalty-banner {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+    border: 1px solid #999999 !important;
+  }
+
+  .cf-loyalty-banner__text {
+    color: #000000 !important;
+  }
+}
