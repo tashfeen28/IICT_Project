@@ -6,14 +6,15 @@
  * FIX SUMMARY (v3)
  * ────────────────
  * Root cause 1 — Wrong/missing localStorage keys
- *   Old code only tried 'cart' and 'coffeeCart'.
- *   The site uses THREE different keys (all now scanned in priority order):
+ *   The site uses FOUR different keys (all merged):
  *     • 'coffeeCircleCart'         — cart_26i3066.js (cold-coffee / main cart)
  *       Items shape: { id, name, unitPrice, price, basePrice, quantity, size, extras[] }
  *     • 'coffee_circle_cart'       — products_26i-3272.js (cappuccino pages)
  *       Items shape: { id, name, unitPrice, price, qty, size, sizeId, extras[], extraIds[] }
+ *     • 'cc_cart'                  — cart_i263069.js (latte / espresso / cappuccino pages)
+ *       Items shape: { id, size, addons:[], qty }  (name/price absent; resolved at render)
  *     • 'iict_checkout_cart_26i3272' — our own key (fallback / test writes)
- *   Both wrapped-object and plain-array JSON formats are handled.
+ *   All are merged into one cart; duplicates by cartLineId are de-duped.
  *
  * Root cause 2 — Quantity field mismatch (qty vs quantity)
  *   cart_26i3066.js  saves  item.quantity
@@ -67,6 +68,7 @@
   var CART_KEYS = [
     'coffeeCircleCart',
     'coffee_circle_cart',
+    'cc_cart',
     'iict_checkout_cart_26i3272',
     'cart',
     'coffeeCart'
@@ -256,32 +258,40 @@
   }
 
   /**
-   * Load cart from localStorage, trying all known keys in priority order.
+   * Load cart from localStorage, merging items from ALL known keys.
+   * Each key's items are appended in priority order; duplicates from the same
+   * product id + size combo are NOT merged because a shopper may intentionally
+   * have added the same drink from different pages with different sizes/extras.
+   * cc_cart items ({ id, size, addons[], qty }) are normalised on the fly;
+   * their name/price are resolved by normaliseItem() which uses parseUnitPrice()
+   * — if that returns 0 the item is still included (guard now only drops items
+   * that have no id AND no name).
    * Returns a normalised array (may be empty).
-   *
-   * Guard: a key's data is used if it yields at least one item that has
-   * either a real name (not the 'Coffee Drink' fallback) OR a price > 0.
-   * This prevents an empty/corrupt key from shadowing a valid one while
-   * still accepting items whose name field was missing but price is valid.
    */
   function loadCart() {
+    var merged = [];
+    var seen = {};
+    var globalIdx = 0;
+
     for (var i = 0; i < CART_KEYS.length; i++) {
       var raw    = localStorage.getItem(CART_KEYS[i]);
       var parsed = parseRaw(raw);
-      if (parsed) {
-        var normalised = parsed
-          .filter(function (item) { return item && (item.id || item.name); })
-          .map(normaliseItem);
-        // Accept this key if any item has a real name OR a parseable price > 0
-        var hasUsableItems = normalised.some(function (item) {
-          return (item.name && item.name !== 'Coffee Drink') || item.unitPrice > 0;
-        });
-        if (normalised.length > 0 && hasUsableItems) {
-          return normalised;
+      if (!parsed) continue;
+
+      parsed.forEach(function (item) {
+        if (!item || (!item.id && !item.name)) return;
+
+        var norm = normaliseItem(item, globalIdx++);
+
+        // Deduplicate across keys by cartLineId so the same item added in two
+        // tabs doesn't appear twice (take first occurrence = highest-priority key)
+        if (!seen[norm.cartLineId]) {
+          seen[norm.cartLineId] = true;
+          merged.push(norm);
         }
-      }
+      });
     }
-    return [];
+    return merged;
   }
 
   /** Persist current cart to our own key. */

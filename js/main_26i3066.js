@@ -172,6 +172,66 @@
       straw: '#4A2E20',
       strawStripe: '#E2B891',
       hasDrizzle: false
+    },
+    'spiced-cardamom-rose-latte': {
+      coffeeBottom: '#5A2B1D',
+      coffeeMid: '#B97867',
+      foamTop: '#F9E3E5',
+      drizzle: '#D47B86',
+      straw: '#B5636E',
+      strawStripe: '#FFF6F7',
+      hasDrizzle: true,
+      garnishType: 'rose'
+    },
+    'salted-caramel-honeycomb-macchiato': {
+      coffeeBottom: '#3F1F0F',
+      coffeeMid: '#9B5B28',
+      foamTop: '#F7E7CE',
+      drizzle: '#D88D38',
+      straw: '#C68B59',
+      strawStripe: '#FFF7E8',
+      hasDrizzle: true,
+      garnishType: 'honeycomb'
+    },
+    'pistachio-saffron-cortado': {
+      coffeeBottom: '#4A2916',
+      coffeeMid: '#9E9F62',
+      foamTop: '#F8E3A6',
+      drizzle: '#D99B26',
+      straw: '#7D8B52',
+      strawStripe: '#FAF6F0',
+      hasDrizzle: true,
+      garnishType: 'pistachio'
+    },
+    'dark-mocha-hazelnut-velvet': {
+      coffeeBottom: '#26110A',
+      coffeeMid: '#592E1C',
+      foamTop: '#E5CFC0',
+      drizzle: '#3B1C0E',
+      straw: '#4A2E20',
+      strawStripe: '#C69C6D',
+      hasDrizzle: true,
+      garnishType: 'cocoa'
+    },
+    'cinnamon-maple-espresso-tonic': {
+      coffeeBottom: '#4D220D',
+      coffeeMid: '#B86E2E',
+      foamTop: '#F7DFB9',
+      drizzle: '#9E4B1E',
+      straw: '#A6542B',
+      strawStripe: '#FAF0E2',
+      hasDrizzle: false,
+      garnishType: 'tonic'
+    },
+    'toasted-coconut-vanilla-cloud': {
+      coffeeBottom: '#3B2012',
+      coffeeMid: '#8C5B3C',
+      foamTop: '#FFFDF8',
+      drizzle: '#D8B589',
+      straw: '#C69C6D',
+      strawStripe: '#FFFFFF',
+      hasDrizzle: true,
+      garnishType: 'coconut'
     }
   };
 
@@ -184,8 +244,60 @@
     var id = String(product.id || '').toLowerCase();
     return (
       id === 'vanilla-sweet-cream-cold-brew' ||
-      name === 'vanilla sweet cream cold brew'
+      name === 'vanilla sweet cream cold brew' ||
+      id === 'spiced-cardamom-rose-latte' ||
+      name === 'spiced cardamom rose latte'
     );
+  }
+
+  /**
+   * Build signature-drink garnish SVG elements when garnishType is specified.
+   */
+  function buildSignatureGarnishMarkup(garnishType) {
+    if (garnishType === 'rose') {
+      return (
+        '<ellipse cx="84" cy="64" rx="5.5" ry="3" fill="#D46A7E" transform="rotate(-18 84 64)" />' +
+        '<ellipse cx="102" cy="62" rx="4.5" ry="2.6" fill="#E38B9B" transform="rotate(14 102 62)" />' +
+        '<circle cx="93" cy="67" r="2.2" fill="#5D7B4A" />'
+      );
+    }
+    if (garnishType === 'honeycomb') {
+      return (
+        '<polygon points="78,61 88,59 92,68 82,70" fill="#E5A93B" stroke="#C47F17" stroke-width="1" />' +
+        '<polygon points="94,63 103,61 105,69 96,71" fill="#F2BE54" stroke="#C47F17" stroke-width="1" />'
+      );
+    }
+    if (garnishType === 'pistachio') {
+      return (
+        '<circle cx="79" cy="64" r="2.6" fill="#7EA14E" />' +
+        '<circle cx="90" cy="62" r="2.1" fill="#9BBF65" />' +
+        '<circle cx="101" cy="65" r="2.5" fill="#7EA14E" />' +
+        '<path d="M84 66 Q94 61 104 64" fill="none" stroke="#D97218" stroke-width="1.5" stroke-linecap="round" />'
+      );
+    }
+    if (garnishType === 'cocoa') {
+      return (
+        '<rect x="78" y="61" width="9" height="4" rx="1.5" fill="#3B1C0E" transform="rotate(-15 82 63)" />' +
+        '<rect x="94" y="62" width="8" height="4" rx="1.5" fill="#4A2511" transform="rotate(20 98 64)" />'
+      );
+    }
+    if (garnishType === 'tonic') {
+      return (
+        '<circle cx="78" cy="122" r="2.2" fill="rgba(255,255,255,0.65)" />' +
+        '<circle cx="92" cy="144" r="1.8" fill="rgba(255,255,255,0.65)" />' +
+        '<circle cx="112" cy="130" r="2.4" fill="rgba(255,255,255,0.6)" />' +
+        '<circle cx="122" cy="112" r="1.6" fill="rgba(255,255,255,0.7)" />' +
+        '<path d="M72 67 A11 11 0 0 1 92 64 Z" fill="#E8852E" stroke="#F9D5A7" stroke-width="1.4" />'
+      );
+    }
+    if (garnishType === 'coconut') {
+      return (
+        '<ellipse cx="81" cy="63" rx="6" ry="2.2" fill="#D2A16B" transform="rotate(-12 81 63)" />' +
+        '<ellipse cx="97" cy="64" rx="5.5" ry="2" fill="#B9824A" transform="rotate(15 97 64)" />' +
+        '<ellipse cx="89" cy="67" rx="4.5" ry="1.8" fill="#E6C396" />'
+      );
+    }
+    return '';
   }
 
   /**
@@ -211,6 +323,8 @@
         '" stroke-width="2.4" stroke-linecap="round" opacity="0.5" />'
       : '';
 
+    var garnishMarkup = buildSignatureGarnishMarkup(palette.garnishType);
+
     return (
       '<svg viewBox="0 0 200 220" width="175" height="190" role="img" aria-label="' +
       escapeHtml(product.name) +
@@ -232,6 +346,7 @@
       '    <rect x="72" y="76" width="21" height="19" rx="5" ry="5" fill="rgba(255, 255, 255, 0.30)" stroke="rgba(255, 255, 255, 0.55)" stroke-width="1.5" transform="rotate(-14 82 85)" />' +
       '    <rect x="104" y="80" width="22" height="20" rx="5" ry="5" fill="rgba(255, 255, 255, 0.28)" stroke="rgba(255, 255, 255, 0.52)" stroke-width="1.5" transform="rotate(16 115 90)" />' +
       '    <rect x="85" y="106" width="20" height="18" rx="5" ry="5" fill="rgba(255, 255, 255, 0.22)" stroke="rgba(255, 255, 255, 0.42)" stroke-width="1.4" transform="rotate(8 95 115)" />' +
+      garnishMarkup +
       '    <path d="M65 66 L74 176" stroke="rgba(255, 255, 255, 0.25)" stroke-width="3.5" stroke-linecap="round" />' +
       '  </g>' +
       '  <path d="M58 58 L69 178 Q70 188 81 188 L119 188 Q130 188 131 178 L142 58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />' +

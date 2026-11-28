@@ -47,3 +47,9 @@ Build pages/cart.html and update js/cart_26i3066.js and css/components_26i3066.c
 
 Response 5:
 Created pages/cart.html and updated js/cart_26i3066.js and css/components_26i3066.css with the dark-espresso hero banner, two-column responsive cart layout, live localStorage synchronization with cold-coffee.html, interactive quantity controls, PKR subtotal/tax/loyalty summary, and checkout confirmation flow.
+
+Prompt 6:
+Build pages/signature-drinks.html and update js/products_26i3066.js, js/main_26i3066.js, js/navigation_26i3066.js, and css/components_26i3066.css for The Coffee Circle Signature Drinks page linked exclusively to *_26i3066.css and *_26i3066.js assets, featuring 6 house-specialty drinks priced in PKR, custom SVG cup artwork, Bestseller pill badge, size/extras customization, Quick View modal, and localStorage cart synchronization with pages/cart.html.
+
+Response 6:
+Created pages/signature-drinks.html and updated js/products_26i3066.js, js/main_26i3066.js, js/navigation_26i3066.js, and css/components_26i3066.css with the dark-espresso hero banner, 6 house-crafted Signature Drinks with custom SVG illustrations, live PKR pricing, Quick View modal, and full localStorage cart integration.
