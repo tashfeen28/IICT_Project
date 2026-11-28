@@ -1,0 +1,160 @@
+================================================================================
+AI CONSOLIDATED SESSION LOG & REFERENCE (ACCOUNTS & SESSION HISTORY)
+Project : The Coffee Circle — IICT Project
+Author  : 26i-3272
+File    : docs/ai-logs/session2_26i-3272.txt
+Date    : 2026-11-28
+================================================================================
+
+--------------------------------------------------------------------------------
+1. PREVIOUS ACCOUNT WORK & TEAMMATE LOGS SUMMARY
+--------------------------------------------------------------------------------
+
+A. Teammate / Previous Account 26i-3272 (Cappuccino Page Session: session-log3272.txt)
+   - Scope & Pages:
+     * Built pages/cappuccino.html and isolated stylesheets:
+       css/style_3272.css, css/components_3272.css, css/responsive_3272.css.
+     * Implemented product catalog and customization logic in js/products_26i-3272.js.
+   - Design Tokens & Layout:
+     * Warm coffee palette: --espresso (#3B2418), --caramel (#C68B59), --cream (#F5EBDD).
+     * Typography: Playfair Display (headings) and Inter (body).
+     * 4-column responsive grid stepping down to 2 columns and 1 column at 1100px, 860px, and 580px.
+     * Code-drawn inline SVG coffee cups with steam and iced variants.
+     * Size options (Small, Regular, Large) with dynamic price deltas (+PKR 0, +PKR 60, +PKR 120).
+     * Customization accordion for add-on extras with checkboxes and live price updates.
+   - Storage Convention:
+     * Persisted to localStorage under key: 'coffee_circle_cart'
+     * Item shape:
+       { id, name, category, size, sizeId, extras: [...], extraIds: [...],
+         unitPrice, price, totalPrice, qty }
+   - Issues & Solutions Solved:
+     * SVG brand logo exploded to full-width: fixed with strict width/height/max-height constraints (32px-34px).
+     * Navigation list items rendering bullets: cleared via high-specificity list-style: none.
+     * CSS vendor-prefix warning: added appearance: textfield alongside -moz-appearance on .qty-input.
+     * Desktop header navigation wrapping: applied flex-wrap: nowrap and absolute positioning for dropdown menus.
+
+B. Teammate Account 26i-3066 (Cold Coffee & Cart Session: docs/ai-logs/26i3066/session1.md)
+   - Scope & Pages:
+     * pages/cold-coffee.html, pages/cart.html, js/cart_26i3066.js, js/main_26i3066.js.
+   - Storage Convention:
+     * Persisted to localStorage under key: 'coffeeCircleCart'
+     * Active promo code stored in: 'coffeeCirclePromo'
+     * Item shape:
+       { id, name, category, image, basePrice, size, sizeDelta, extras: [{id, label, price}],
+         unitPrice, price, quantity, cartKey }
+     * Note: used property 'quantity' (instead of 'qty').
+     * Formatted in PKR, added 5% tax and loyalty calculation (10 pts per PKR 100 spent).
+
+C. Teammate Account 26i-3070 (Landing & Loyalty Sessions: docs/ai-logs/26i3070/session1.md & session2.md)
+   - Scope & Pages:
+     * index.html (Homepage), pages/loyalty.html, js/index_i263070.js, js/loyalty_i263070.js.
+   - Storage Convention:
+     * Persisted cart items to: 'coffee_circle_cart'
+     * Users and session data: 'coffee_circle_users', 'currentUser'
+     * Loyalty reward redemption injects free reward drink items at PKR 0.
+
+D. Teammate Account 26i-3068 (Espresso Session: docs/ai-logs/26i-3068/session-log.txt)
+   - Scope & Pages:
+     * pages/espresso.html, js/products_i263068.js, early window.CoffeeCart prototype.
+   - Storage Convention:
+     * Early prototype used 'coffeeCircleCart' via window.CoffeeCart.addItem().
+
+
+--------------------------------------------------------------------------------
+2. CURRENT ACCOUNT WORK & SESSION LOG (CHECKOUT IMPLEMENTATION)
+--------------------------------------------------------------------------------
+
+A. Objectives:
+   - Deliver pages/checkout.html, js/checkout_26i-3272.js, and css/checkout_26i-3272.css.
+   - Fix zero-pricing / PKR 0 bug where items failed to transfer from cart to checkout.
+   - Handle multi-key compatibility without modifying any teammate files.
+
+B. Root Causes Identified for Missing Items & "PKR 0" Totals:
+   1. Storage Key Fragmentation:
+      - Cold Coffee / Cart pages saved under 'coffeeCircleCart'.
+      - Cappuccino / Loyalty pages saved under 'coffee_circle_cart'.
+      - Standalone testing utilized 'iict_checkout_cart_26i3272'.
+   2. Property Name Mismatches:
+      - Quantity stored as 'quantity' in some scripts and 'qty' in others.
+      - Price stored as 'unitPrice', 'price', 'basePrice', 'totalPrice', or formatted string ("PKR 450").
+   3. Overly Strict Usability Guard:
+      - hasUsableItems check discarded items without custom names even if valid price > 0 existed.
+   4. Item ID Collisions:
+      - Duplicate product IDs with different sizes/extras collided on quantity adjustments.
+
+C. Fixes Applied in js/checkout_26i-3272.js & pages/checkout.html:
+   1. Multi-Key Priority Scanner:
+      - Checks ['coffeeCircleCart', 'coffee_circle_cart', 'iict_checkout_cart_26i3272', 'cart', 'coffeeCart'].
+      - Supports both JSON arrays and wrapped object maps.
+   2. Resilient Sanitizer & Value Parser:
+      - parseMoney(): Strips 'PKR', 'Rs', '$', commas, and whitespace before parseFloat.
+      - parseQty(): Reads both item.quantity and item.qty, defaulting to 1.
+      - parseUnitPrice(): Evaluates unitPrice -> price -> basePrice -> amount -> cost -> rate -> (totalPrice / qty).
+   3. Updated Usability Guard:
+      - Accepts cart if any item has a valid name OR a parseable unitPrice > 0.
+   4. Unique Line Fingerprinting:
+      - cartLineId = productId + '||' + sizeLabel + '||' + extrasKey.
+      - Ensures increment, decrement, and remove operate on the exact item variation.
+   5. Standardized Currency Display:
+      - All dynamic calculations and static fallback elements use 'PKR' consistently.
+   6. Terminal & Sandbox Handling:
+      - Adapted to environment permissions and executed non-destructive read checks.
+
+
+--------------------------------------------------------------------------------
+3. PLAN MODE INSTRUCTIONS & BEST PRACTICES
+--------------------------------------------------------------------------------
+
+A. How to Switch to Plan Mode:
+   - Shortcut: Press Shift+Tab to cycle between Plan Mode and Execution/Act Mode.
+   - Slash Command: Type /plan in the chat prompt box and press Enter.
+
+B. When to Use Plan Mode vs. Execution Mode:
+   - Use Plan Mode when:
+     * Embarking on complex, multi-file refactoring or architectural changes.
+     * Aligning on requirements, component schemas, or file naming rules before making edits.
+     * Analyzing trade-offs or investigating breaking changes without touching code.
+   - Use Execution (Normal) Mode when:
+     * Carrying out agreed-upon implementations, writing code, or making direct edits.
+     * Running verification commands, tests, or builds.
+     * Performing iterative bug fixes and refactoring with immediate checks.
+
+C. How to Switch Back to Execution Mode:
+   - Press Shift+Tab again until you return to standard/execution mode, or approve the generated plan to proceed with execution.
+
+
+--------------------------------------------------------------------------------
+4. CURRENT STATUS, REUSABLE DATA & NEXT STEPS
+--------------------------------------------------------------------------------
+
+A. Current Status:
+   - [DONE] pages/checkout.html fully styled and functioning with responsive grid, form validation, delivery/pickup toggle, and payment panel switching.
+   - [DONE] js/checkout_26i-3272.js multi-key scanner and normalization logic operational.
+   - [DONE] css/checkout_26i-3272.css scoped under .co- and #co- prefixes with zero side-effects.
+   - [DONE] Strict file isolation maintained: ZERO teammate files were touched or overwritten.
+
+B. Reusable Test Payload:
+   To verify checkout loading directly in the browser developer console:
+   -----------------------------------------------------------------------------
+   localStorage.setItem('coffeeCircleCart', JSON.stringify([
+     { id: 'cold-latte', name: 'Iced Latte', price: 450, qty: 2, size: 'Medium' }
+   ]));
+   -----------------------------------------------------------------------------
+   Expected UI Results on pages/checkout.html:
+   - Item row rendered: "Iced Latte (Medium) · Qty: 2"
+   - Unit price readout: "Unit price: PKR 450"
+   - Line price readout: "PKR 900"
+   - Items count: 2
+   - Subtotal: PKR 900
+   - Delivery fee: PKR 150 (FREE if Pickup selected)
+   - Service charge (5%): PKR 45
+   - Grand Total: PKR 1,095
+
+C. Next Steps:
+   1. Await teammate completion and final merge of branch i263066, i263070, and i263068 into main.
+   2. Perform end-to-end user journey test:
+      - Add drink from cappuccino.html (coffee_circle_cart).
+      - Add drink from cold-coffee.html (coffeeCircleCart).
+      - Open cart.html and navigate to checkout.html.
+      - Validate combined cart review and test simulated order placement.
+================================================================================
