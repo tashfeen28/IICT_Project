@@ -669,7 +669,101 @@
       setTimeout(function () {
         var orderId = genOrderId();
         var email   = ($id('co-email') ? $id('co-email').value : '').trim();
-        var t       = computeTotals();
+        var fullName = ($id('co-full-name') ? $id('co-full-name').value : '').trim();
+        var phone   = ($id('co-phone') ? $id('co-phone').value : '').trim();
+        var fulfillmentRadio = $q('input[name="fulfillment"]:checked');
+        var fulfillment = fulfillmentRadio ? fulfillmentRadio.value : 'delivery';
+        var address = ($id('co-address') ? $id('co-address').value : '').trim();
+        var city    = ($id('co-city') ? $id('co-city').value : '').trim();
+        var notes   = ($id('co-notes') ? $id('co-notes').value : '').trim();
+
+        var paymentRadio = $q('input[name="paymentMethod"]:checked');
+        var paymentMethod = paymentRadio ? paymentRadio.value : 'card';
+        var cardName = ($id('co-card-name') ? $id('co-card-name').value : '').trim();
+        var rawCardNum = ($id('co-card-number') ? $id('co-card-number').value : '').replace(/\s/g, '');
+        var cardLast4 = rawCardNum ? rawCardNum.slice(-4) : '';
+        var walletType = ($id('co-wallet-type') ? $id('co-wallet-type').value : '').trim();
+        var walletNumber = ($id('co-wallet-number') ? $id('co-wallet-number').value : '').trim();
+
+        var t = computeTotals();
+
+        // Build completed order snapshot before clearing cart
+        var itemsSnapshot = cart.map(function (item) {
+          return {
+            id: item.id,
+            name: item.name,
+            size: item.size,
+            category: item.category,
+            unitPrice: item.unitPrice,
+            quantity: item.quantity,
+            qty: item.quantity,
+            price: item.unitPrice,
+            totalPrice: item.unitPrice * item.quantity,
+            extras: Array.isArray(item.extras) ? JSON.parse(JSON.stringify(item.extras)) : []
+          };
+        });
+
+        var orderSnapshot = {
+          orderId: orderId,
+          id: orderId,
+          createdAt: new Date().toISOString(),
+          timestamp: Date.now(),
+          formattedDate: new Date().toLocaleString('en-PK', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          }),
+          status: 'Confirmed',
+          customer: {
+            fullName: fullName || 'Valued Customer',
+            email: email || 'customer@example.com',
+            phone: phone || ''
+          },
+          fulfillment: {
+            method: fulfillment,
+            address: fulfillment === 'delivery' ? address : 'The Coffee Circle Lounge, 12 Gulberg III, Lahore',
+            city: fulfillment === 'delivery' ? city : 'Lahore',
+            notes: notes
+          },
+          payment: {
+            method: paymentMethod,
+            cardName: cardName,
+            cardLast4: cardLast4,
+            walletType: walletType,
+            walletNumber: walletNumber
+          },
+          items: itemsSnapshot,
+          itemCount: itemsSnapshot.reduce(function (sum, it) { return sum + it.quantity; }, 0),
+          subtotal: t.subtotal,
+          delivery: t.delivery,
+          service: t.service,
+          tax: t.service,
+          discount: 0,
+          grand: t.grand,
+          total: t.grand,
+          currency: 'PKR',
+          prepTime: '15–20 minutes',
+          instructions: notes || 'None provided'
+        };
+
+        // Persist order snapshot to localStorage (coffeeCircleLastOrder and coffeeCircleOrders)
+        try {
+          window.localStorage.setItem('coffeeCircleLastOrder', JSON.stringify(orderSnapshot));
+
+          var existingOrders = [];
+          try {
+            var rawOrders = window.localStorage.getItem('coffeeCircleOrders');
+            if (rawOrders) {
+              var parsed = JSON.parse(rawOrders);
+              if (Array.isArray(parsed)) existingOrders = parsed;
+            }
+          } catch (storageErr) {
+            console.warn('Could not read existing orders array', storageErr);
+          }
+          existingOrders.unshift(orderSnapshot);
+          window.localStorage.setItem('coffeeCircleOrders', JSON.stringify(existingOrders));
+        } catch (saveErr) {
+          console.error('Failed to save order snapshot:', saveErr);
+        }
 
         // Populate confirm box fields
         var setTxt = function (id, val) { var el = $id(id); if (el) el.textContent = val; };

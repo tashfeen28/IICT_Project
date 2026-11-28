@@ -1,0 +1,144 @@
+================================================================================
+AI CONSOLIDATED SESSION LOG (SESSION 3)
+Project : The Coffee Circle — IICT Project
+Author  : 26i-3272
+Branch  : i263272
+File    : docs/ai-logs/session3_26i3272.txt
+Date    : 2026-11-28
+================================================================================
+
+--------------------------------------------------------------------------------
+1. SESSION METADATA & WORKSPACE SCOPE
+--------------------------------------------------------------------------------
+Session Number : Session 3 (Order Confirmation Page Implementation & Redesign)
+Student ID     : 26i-3272
+Git Branch     : i263272
+Target Path    : C:\Users\Aun Raza Khan\Documents\GitHub\IICT_Project
+Personal Files :
+  - pages/confirmation.html
+  - js/confirmation_26i-3272.js
+  - css/confirmation_26i-3272.css
+  - js/checkout_26i-3272.js
+  - css/checkout_26i-3272.css
+  - pages/checkout.html
+
+--------------------------------------------------------------------------------
+2. OBJECTIVES & ARCHITECTURE OVERVIEW
+--------------------------------------------------------------------------------
+The core objective for this session was to engineer and refine the complete Order
+Confirmation experience for The Coffee Circle application from scratch under the
+student ID 26i-3272 namespace.
+
+The system connects the checkout placement event seamlessly to a modern, dynamic
+confirmation receipt page. The design prioritizes visual elegance, accessible
+semantic structure, responsive performance across mobile and desktop, and strict
+scope isolation to prevent any interference with other team members' code.
+
+--------------------------------------------------------------------------------
+3. VISUAL LAYOUT & DESIGN SYSTEM IMPLEMENTATION
+--------------------------------------------------------------------------------
+The visual styling is maintained in css/confirmation_26i-3272.css, adopting a
+cohesive artisan coffee brand palette:
+
+A. Palette & Canvas:
+   - Canvas: Warm cream / parchment background (#f5efe4).
+   - Navigation Header: Dark espresso bar (#23150c) with crisp light navigation
+     elements for high contrast and readability.
+   - Accents: Solid forest-green status circular badge (#3a7d44), soft tan pill
+     badge (#e8dcc8) with subtle border (#d8c6af), and dark brown text (#3d2516).
+
+B. Navigation Bar:
+   - Full dark espresso navigation bar featuring the brand title ("The Coffee Circle"
+     with coffee cup icon) and clean responsive links: Home, Menu (linking to
+     cold-coffee.html), Loyalty Rewards (loyalty.html), My Account, Login / Register,
+     and an interactive Cart button with a dynamic quantity counter badge.
+
+C. Confirmation Hero & Badges:
+   - Centered solid forest-green circular checkmark badge (#3a7d44) positioned
+     directly above the confirmation headline.
+   - Bold serif headline rendered in Playfair Display:
+     "Thank you, <customer name>! Your order is confirmed."
+   - Directly underneath the heading sits the "Order number" label paired with
+     a soft tan pill badge displaying the formatted order identifier.
+
+D. Two-Column Card Grid (White Rounded Cards):
+   The layout arranges two balanced white cards with rounded corners (16px radius),
+   soft borders (#e6ded4), and subtle drop shadows:
+   1. Left Card ("Your drinks"):
+      - Card header titled "Your drinks".
+      - Itemized drink list displaying each ordered item in the exact format:
+        <qty> x <Item Name> (<Size/Customization>) on the left, and PKR <amount>
+        on the right, separated by subtle dividers.
+      - Financial breakdown section including Subtotal, Discount (- PKR <amount>
+        when applicable), Delivery fee, and a bold prominent Total payment row in PKR.
+   2. Right Card ("Order details"):
+      - Card header titled "Order details".
+      - Clean uppercase micro-labels stacked vertically above their values:
+        * PAYMENT METHOD (e.g. Credit Card with masked card digits, Cash on Delivery,
+          or Digital Wallet details).
+        * PICKUP FROM THE COFFEE CIRCLE (or DELIVERY LOCATION depending on the
+          customer's selected fulfillment method).
+        * CONTACT (Customer full name, phone number, and email address).
+        * INSTRUCTIONS (Custom preparation notes or delivery instructions,
+          falling back cleanly to "None provided" if left blank).
+        * ESTIMATED PREPARATION TIME (e.g., "15-20 minutes").
+      - Dark espresso loyalty banner positioned near the bottom of the card:
+        "Log in next time to earn loyalty points on your orders."
+
+E. Centered Action Buttons:
+   - Primary dark espresso pill button: "Return to Home", directing to ../index.html.
+   - Secondary light outlined pill button: "Explore More Coffee", directing to
+     cold-coffee.html.
+   - Print Stylesheet: Scoped @media print rules ensure that when printing or
+     generating a PDF receipt, navigational headers, footers, and interactive
+     buttons are suppressed while retaining sharp paper-style receipt typography.
+
+--------------------------------------------------------------------------------
+4. DYNAMIC DATA INTEGRATION & CHECKOUT FLOW
+--------------------------------------------------------------------------------
+The dynamic rendering engine is implemented in js/confirmation_26i-3272.js and
+integrates with the checkout pipeline in js/checkout_26i-3272.js:
+
+A. Order Placement Snapshot (js/checkout_26i-3272.js):
+   - When the user places an order on pages/checkout.html, the submission handler
+     validates inputs and packages a comprehensive immutable snapshot containing:
+     orderId, timestamp, formattedDate, status ("Confirmed"), customer contact details,
+     fulfillment preferences, payment method details, item list with normalized
+     quantities and unit prices, subtotal, delivery fee, tax/service rate, grand total,
+     prepTime, and instructions notes.
+   - The snapshot is saved to localStorage under 'coffeeCircleLastOrder' and also
+     prepended to the order history array in 'coffeeCircleOrders'.
+   - The checkout confirmation card on pages/checkout.html provides a direct
+     action button linking to pages/confirmation.html.
+
+B. Data Retrieval & Normalization (js/confirmation_26i-3272.js):
+   - The confirmation script automatically scans localStorage keys in priority order:
+     'coffeeCircleLastOrder', 'coffeeCircleOrders', and legacy project keys.
+   - Price Normalization: Uses parseMoney to strip out any currency symbols ("PKR",
+     "Rs.", "$") and thousand separators, recalculating robust numbers.
+   - Item Customization Normalization: Combines drink size specifications and add-on
+     extras into a clear parenthetical label (e.g., "Regular (12 oz), +Extra Espresso Shot").
+   - Fallback to Active Cart: If no completed order snapshot exists but an active
+     cart is present in 'coffeeCircleCart', it gracefully builds a preview confirmation.
+   - Empty State Handling: If neither a completed order nor cart data is found, it
+     renders a clean "No Recent Order Found" card with a coffee icon, polite explanation,
+     navigation links back to the home/menu pages, and a demo order loader for rapid testing.
+
+--------------------------------------------------------------------------------
+5. SCOPE GUARDRAILS & INTEGRITY VERIFICATION
+--------------------------------------------------------------------------------
+Strict team isolation rules were adhered to throughout all changes:
+- Zero teammate files were modified, overwritten, or deleted. All files belonging
+  to teammates (including folders 26i3066, 26i-3068, 26i-3070, and individual scripts
+  cart_26i3066.js, main_26i3066.js, navigation_26i3066.js, products_26i-3272.js, etc.)
+  remain strictly untouched.
+- Git Hygiene: No bulk commands such as "git add ." or forced updates such as
+  "git push --force" were used at any time.
+- All modifications are strictly confined to the 26i-3272 personal file suite:
+  * pages/confirmation.html
+  * js/confirmation_26i-3272.js
+  * css/confirmation_26i-3272.css
+  * js/checkout_26i-3272.js
+  * pages/checkout.html
+  * docs/ai-logs/session3_26i3272.txt
+================================================================================
